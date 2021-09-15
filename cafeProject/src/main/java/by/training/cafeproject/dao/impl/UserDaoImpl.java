@@ -1,101 +1,104 @@
 package by.training.cafeproject.dao.impl;
 
-import by.training.cafeproject.dao.ConnectorDB;
 import by.training.cafeproject.dao.UserDao;
-import by.training.cafeproject.entity.Ingredient;
-import by.training.cafeproject.entity.User;
+import by.training.cafeproject.dao.exception.DaoException;
+import by.training.cafeproject.domain.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoImpl implements UserDao {
-    private Connection connection = ConnectorDB.getConnection();
+public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
     @Override
-    public Integer create(User entity) {
+    public void create(User entity) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "INSERT INTO users (id, login, password, role) VALUES (?,?,?,?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, entity.getId());
             statement.setString(2, entity.getLogin());
             statement.setString(3, entity.getPassword());
             statement.setInt(4, entity.getRoleNumber());
             statement.executeUpdate();
-            statement.close();
-            return 1;
         } catch (SQLException e) {
-            e.getMessage();
-            return null;
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public User read(Integer id) {
+    public User read(Integer id) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "SELECT login, password, role FROM users WHERE id = ?";
             User user = new User();
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 user.setId(id);
                 user.setLogin(rs.getString("login"));
                 user.setPassword(rs.getString("password"));
                 user.setRole(rs.getInt("role"));
             }
-            ps.close();
             return user;
         } catch (SQLException e) {
-            e.getMessage();
-            return null;
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public void update(User entity) {
+    public void update(User entity) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "UPDATE users SET login = ?, password = ?, role = ? WHERE id = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setInt(4, entity.getId());
             statement.setString(1, entity.getLogin());
             statement.setString(2, entity.getPassword());
             statement.setInt(3, entity.getRoleNumber());
             statement.executeUpdate();
-            statement.close();
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public User read(String login, String password) {
+    public User read(String login, String password) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "SELECT id, role FROM users WHERE login = ? and password = ?";
             User user = new User();
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, login);
-            ps.setString(2, password);
-            ResultSet rs = ps.executeQuery();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, login);
+            statement.setString(2, password);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 user.setLogin(login);
                 user.setPassword(password);
                 user.setId(rs.getInt("id"));
                 user.setRole(rs.getInt("role"));
             }
-            ps.close();
             return user;
         } catch (SQLException e) {
-            e.getMessage();
-            return null;
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public List<User> read() {
+    public List<User> read() throws DaoException {
+        Statement statement = null;
         try {
             String sql = "SELECT id, login, password, role FROM users";
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             List<User> users = new ArrayList<>();
             while (rs.next()) {
@@ -108,48 +111,55 @@ public class UserDaoImpl implements UserDao {
             }
             return users;
         } catch (SQLException e) {
-            e.getMessage();
-            return null;
+            throw new DaoException(e);
+        } finally {
+            this.closeStatement(statement);
         }
     }
 
     @Override
-    public void delete(String login, String password) {
+    public void delete(String login, String password) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "DELETE FROM users WHERE login = ? and password = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, login);
-            ps.setString(2, password);
-            ps.executeUpdate();
-            ps.close();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, login);
+            statement.setString(2, password);
+            statement.executeUpdate();
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer id) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "DELETE FROM users WHERE id = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            ps.close();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            statement.executeUpdate();
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public void delete(User entity) {
+    public void delete(User entity) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "DELETE FROM users WHERE id = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, entity.getId());
-            ps.executeUpdate();
-            ps.close();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, entity.getId());
+            statement.executeUpdate();
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 }

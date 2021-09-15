@@ -26,7 +26,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a">
-        <schema name="cafe_db" object-types="table, column" />
+        <schema name="cafe_db" object-types="table" />
       </connection>
     </loaded-nodes>
   </component>
@@ -49,13 +49,13 @@
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
     <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/b6bd97c5-4c01-4d76-8e76-ba4b3674adab/console_1.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
-    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/88ba1667-0f14-43fb-b20d-39527b8954f6/console.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
-    <mapping file-url="file://$PROJECT_DIR$/sql/2_create_database.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
-    <mapping file-url="file://$PROJECT_DIR$/sql/3_create_tables.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
-    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/b6bd97c5-4c01-4d76-8e76-ba4b3674adab/console.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
-    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/0cddf177-bf30-496c-ae9c-a69a36a3261d/console.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
-    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/363ef4a4-b0ab-4e61-9dbd-666f161562c9/console.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
     <mapping file-url="file://$PROJECT_DIR$/sql/5_fill_tables.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
+    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/0cddf177-bf30-496c-ae9c-a69a36a3261d/console.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
+    <mapping file-url="file://$PROJECT_DIR$/sql/2_create_database.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
+    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/b6bd97c5-4c01-4d76-8e76-ba4b3674adab/console.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
+    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/88ba1667-0f14-43fb-b20d-39527b8954f6/console.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
+    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/363ef4a4-b0ab-4e61-9dbd-666f161562c9/console.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
+    <mapping file-url="file://$PROJECT_DIR$/sql/3_create_tables.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
     <mapping file-url="file://$PROJECT_DIR$/sql/1_drop_database.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">

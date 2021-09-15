@@ -1,30 +1,21 @@
 package by.training.cafeproject.controller;
 
-import by.training.cafeproject.dao.FoodDao;
-import by.training.cafeproject.dao.UserDao;
-import by.training.cafeproject.dao.WorkerDao;
 import by.training.cafeproject.dao.impl.FoodDaoImpl;
-import by.training.cafeproject.dao.impl.IngredientDaoImpl;
-import by.training.cafeproject.dao.impl.UserDaoImpl;
-import by.training.cafeproject.dao.impl.WorkerDaoImpl;
-import by.training.cafeproject.entity.Food;
-import by.training.cafeproject.entity.Ingredient;
-import by.training.cafeproject.entity.User;
-import by.training.cafeproject.entity.Worker;
+import by.training.cafeproject.domain.FoodIngredient;
+import by.training.cafeproject.service.FoodIngredientService;
+import by.training.cafeproject.service.exception.ServiceException;
+import by.training.cafeproject.service.impl.FoodIngredientServiceImpl;
 
-import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws ParseException {
-        IngredientDaoImpl ingredientDao = new IngredientDaoImpl();
-        Ingredient ingredient = new Ingredient();
-        ingredient.setId(55);
-        ingredient.setTitle("cucumber");
-        ingredientDao.create(ingredient);
+//        IngredientDaoImpl ingredientDao = new IngredientDaoImpl();
+//        Ingredient ingredient = new Ingredient();
+//        ingredient.setId(55);
+//        ingredient.setTitle("cucumber");
+//        ingredientDao.create(ingredient);
 ////        System.out.println(ingredient.toString());
 ////        ingredient.setId(22);
 //////        ingredient.setTitle("onion");
@@ -97,5 +88,14 @@ public class Main {
 //        food.setPrice(11.9);
 //        food.setType(1);
 //        foodDao.delete(5);
+
+        try {
+            FoodIngredientService foodIngredientService = new FoodIngredientServiceImpl();
+            List<FoodIngredient> foodIngredients = foodIngredientService.read();
+            System.out.println(foodIngredients.toString());
+        } catch (ServiceException e) {
+            e.getMessage();
+        }
+
     }
 }

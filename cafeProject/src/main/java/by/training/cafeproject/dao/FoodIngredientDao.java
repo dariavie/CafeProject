@@ -1,18 +1,18 @@
 package by.training.cafeproject.dao;
 
-import by.training.cafeproject.entity.Food;
-import by.training.cafeproject.entity.FoodIngredient;
-import by.training.cafeproject.entity.Ingredient;
+import by.training.cafeproject.dao.exception.DaoException;
+import by.training.cafeproject.domain.FoodIngredient;
 
 import java.util.List;
 
 public interface FoodIngredientDao extends Dao<FoodIngredient> {
-    void deleteByFoodId(Integer foodId);
 
-    void deleteByIngredientId(Integer ingredientId);
+    List<FoodIngredient> readByFoodId(Integer foodId) throws DaoException;
 
-    List<FoodIngredient> readByFoodId(Integer foodId);
+    List<FoodIngredient> readByIngredientId(Integer ingredientId) throws DaoException;
 
-    List<FoodIngredient> readByIngredientId(Integer ingredientId);
+    void deleteByFoodId(Integer foodId) throws DaoException;
+
+    void deleteByIngredientId(Integer ingredientId) throws DaoException;
 
 }

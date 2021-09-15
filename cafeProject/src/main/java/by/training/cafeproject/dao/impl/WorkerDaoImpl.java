@@ -1,78 +1,80 @@
 package by.training.cafeproject.dao.impl;
 
-import by.training.cafeproject.dao.ConnectorDB;
 import by.training.cafeproject.dao.WorkerDao;
-import by.training.cafeproject.entity.Ingredient;
-import by.training.cafeproject.entity.Worker;
+import by.training.cafeproject.dao.exception.DaoException;
+import by.training.cafeproject.domain.Worker;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkerDaoImpl implements WorkerDao {
-    private Connection connection = ConnectorDB.getConnection();
+public class WorkerDaoImpl extends BaseDaoImpl implements WorkerDao {
 
     @Override
-    public Integer create(Worker entity) {
+    public void create(Worker entity) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "INSERT INTO workers (id, start_of_work, end_of_work, specialization) VALUES (?,?,?,?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, entity.getId());
             statement.setDate(2, entity.getStartOfWork());
             statement.setDate(3, entity.getEndOfWork());
             statement.setString(4, entity.getSpecialization());
             statement.executeUpdate();
-            statement.close();
-            return 1;
         } catch (SQLException e) {
-            e.getMessage();
-            return null;
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public Worker read(Integer id) {
+    public Worker read(Integer id) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "SELECT start_of_work, end_of_work, specialization FROM workers WHERE id = ?";
             Worker worker = new Worker();
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 worker.setId(id);
                 worker.setStartOfWork(rs.getDate("start_of_work"));
                 worker.setEndOfWork(rs.getDate("end_of_work"));
                 worker.setSpecialization(rs.getString("specialization"));
             }
-            ps.close();
             return worker;
         } catch (SQLException e) {
-            e.getMessage();
-            return null;
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public void update(Worker entity) {
+    public void update(Worker entity) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "UPDATE workers SET start_of_work = ?, end_of_work = ?, specialization = ? WHERE id = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setInt(4, entity.getId());
             statement.setDate(1, entity.getStartOfWork());
             statement.setDate(2, entity.getEndOfWork());
             statement.setString(3, entity.getSpecialization());
             statement.executeUpdate();
-            statement.close();
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public List<Worker> read() {
+    public List<Worker> read() throws DaoException {
+        Statement statement = null;
         try {
             String sql = "SELECT id, start_of_work, end_of_work, specialization FROM workers";
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             List<Worker> workers = new ArrayList<>();
             while (rs.next()) {
@@ -85,45 +87,51 @@ public class WorkerDaoImpl implements WorkerDao {
             }
             return workers;
         } catch (SQLException e) {
-            e.getMessage();
-            return null;
+            throw new DaoException(e);
+        } finally {
+            this.closeStatement(statement);
         }
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer id) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "DELETE FROM workers WHERE id = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            ps.close();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            statement.executeUpdate();
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public void delete(Worker entity) {
+    public void delete(Worker entity) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "DELETE FROM workers WHERE id = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, entity.getId());
-            ps.executeUpdate();
-            ps.close();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, entity.getId());
+            statement.executeUpdate();
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public List<Worker> readByStartDate(Date date) {
+    public List<Worker> readByStartDate(Date date) throws DaoException {
+        PreparedStatement statement = null;
         try {
             List<Worker> workers = new ArrayList<>();
             String sql = "SELECT id, end_of_work, specialization FROM workers WHERE start_of_work = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setDate(1, date);
-            ResultSet rs = ps.executeQuery();
+            statement = connection.prepareStatement(sql);
+            statement.setDate(1, date);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Worker worker = new Worker();
                 worker.setStartOfWork(date);
@@ -132,22 +140,24 @@ public class WorkerDaoImpl implements WorkerDao {
                 worker.setSpecialization(rs.getString("specialization"));
                 workers.add(worker);
             }
-            ps.close();
             return workers;
         } catch (SQLException e) {
-            e.getMessage();
-            return null;
-        } //TODO doesn't work with data that has already been in the table
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
+        }
+        //TODO doesn't work with data that has already been in the table
     }
 
     @Override
-    public List<Worker> readByEndDate(Date date) {
+    public List<Worker> readByEndDate(Date date) throws DaoException {
+        PreparedStatement statement = null;
         try {
             List<Worker> workers = new ArrayList<>();
             String sql = "SELECT id, start_of_work, specialization FROM workers WHERE end_of_work = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setDate(1, date);
-            ResultSet rs = ps.executeQuery();
+            statement = connection.prepareStatement(sql);
+            statement.setDate(1, date);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Worker worker = new Worker();
                 worker.setEndOfWork(date);
@@ -156,22 +166,24 @@ public class WorkerDaoImpl implements WorkerDao {
                 worker.setSpecialization(rs.getString("specialization"));
                 workers.add(worker);
             }
-            ps.close();
             return workers;
         } catch (SQLException e) {
-            e.getMessage();
-            return null;
-        } //TODO doesn't work with data that has already been in the table and with null
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
+        }
+        //TODO doesn't work with data that has already been in the table and with null
     }
 
     @Override
-    public List<Worker> readBySpecialization(String search) {
+    public List<Worker> readBySpecialization(String search) throws DaoException {
+        PreparedStatement statement = null;
         try {
             List<Worker> workers = new ArrayList<>();
             String sql = "SELECT id, start_of_work, end_of_work FROM workers WHERE specialization = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, search);
-            ResultSet rs = ps.executeQuery();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, search);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Worker worker = new Worker();
                 worker.setSpecialization(search);
@@ -180,24 +192,26 @@ public class WorkerDaoImpl implements WorkerDao {
                 worker.setEndOfWork(rs.getDate("end_of_work"));
                 workers.add(worker);
             }
-            ps.close();
             return workers;
         } catch (SQLException e) {
-            e.getMessage();
-            return null;
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public void deleteBySpecialization(String specialization) {
+    public void deleteBySpecialization(String specialization) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "DELETE FROM workers WHERE specialization = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, specialization);
-            ps.executeUpdate();
-            ps.close();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, specialization);
+            statement.executeUpdate();
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DaoException(e);
+        }  finally {
+            this.closePreparedStatement(statement);
         }
     }
 }

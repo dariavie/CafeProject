@@ -1,81 +1,87 @@
 package by.training.cafeproject.dao.impl;
 
-import by.training.cafeproject.dao.ConnectorDB;
 import by.training.cafeproject.dao.FoodDao;
-import by.training.cafeproject.entity.Food;
-import by.training.cafeproject.entity.Ingredient;
+import by.training.cafeproject.dao.exception.DaoException;
+import by.training.cafeproject.domain.Food;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FoodDaoImpl implements FoodDao {
-    private Connection connection = ConnectorDB.getConnection();
+public class FoodDaoImpl extends BaseDaoImpl implements FoodDao {
 
     @Override
-    public Integer create(Food entity) {
+    public void create(Food entity) throws DaoException {
+        PreparedStatement statement = null;
         try {
-            String sql = "INSERT INTO foods (id, title, description, price, type) VALUES (?,?,?,?,?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            String sql = "INSERT INTO foods (id, title, description, price, type, recipe) VALUES (?,?,?,?,?,?)";
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, entity.getId());
             statement.setString(2, entity.getTitle());
             statement.setString(3, entity.getDescription());
             statement.setDouble(4, entity.getPrice());
             statement.setInt(5, entity.getTypeNumber());
+            statement.setString(6, entity.getRecipe());
             statement.executeUpdate();
             statement.close();
-            return 1;
         } catch (SQLException e) {
-            e.getMessage();
-            return null;
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public Food read(Integer id) {
+    public Food read(Integer id) throws DaoException {
+        PreparedStatement statement = null;
         try {
-            String sql = "SELECT title, description, price, type FROM foods WHERE id = ?";
+            String sql = "SELECT title, description, price, type, recipe FROM foods WHERE id = ?";
             Food food = new Food();
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 food.setId(id);
                 food.setTitle(rs.getString("title"));
                 food.setDescription(rs.getString("description"));
                 food.setPrice(rs.getDouble("price"));
                 food.setType(rs.getInt("type"));
+                food.setRecipe(rs.getString("recipe"));
             }
-            ps.close();
             return food;
         } catch (SQLException e) {
-            e.getMessage();
-            return null;
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public void update(Food entity) {
+    public void update(Food entity) throws DaoException {
+        PreparedStatement statement = null;
         try {
-            String sql = "UPDATE foods SET title = ?, description = ?, price = ?, type = ? WHERE id = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            String sql = "UPDATE foods SET title = ?, description = ?, price = ?, type = ?, recipe = ? WHERE id = ?";
+            statement = connection.prepareStatement(sql);
             statement.setInt(5, entity.getId());
             statement.setString(1, entity.getTitle());
             statement.setString(2, entity.getDescription());
             statement.setDouble(3, entity.getPrice());
             statement.setInt(4, entity.getTypeNumber());
+            statement.setString(5, entity.getRecipe());
             statement.executeUpdate();
-            statement.close();
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public List<Food> read() {
+    public List<Food> read() throws DaoException {
+        Statement statement = null;
         try {
-            String sql = "SELECT id, title, description, price, type FROM foods";
-            Statement statement = connection.createStatement();
+            String sql = "SELECT id, title, description, price, type, recipe FROM foods";
+            statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             List<Food> foods = new ArrayList<>();
             while (rs.next()) {
@@ -85,49 +91,56 @@ public class FoodDaoImpl implements FoodDao {
                 food.setDescription(rs.getString("description"));
                 food.setPrice(rs.getDouble("price"));
                 food.setType(rs.getInt("type"));
+                food.setRecipe(rs.getString("recipe"));
                 foods.add(food);
             }
             return foods;
         } catch (SQLException e) {
-            e.getMessage();
-            return null;
+            throw new DaoException(e);
+        } finally {
+            this.closeStatement(statement);
         }
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer id) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "DELETE FROM foods WHERE id = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            ps.close();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            statement.executeUpdate();
         } catch (SQLException e) {
-            e.getMessage();
+           throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public void delete(Food entity) {
+    public void delete(Food entity) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "DELETE FROM foods WHERE id = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, entity.getId());
-            ps.executeUpdate();
-            ps.close();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, entity.getId());
+            statement.executeUpdate();
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public List<Food> readByTitle(String search) {
+    public List<Food> readByTitle(String search) throws DaoException {
+        PreparedStatement statement = null;
         try {
-            String sql = "SELECT id, description, price, type FROM foods WHERE title = ?";
+            String sql = "SELECT id, description, price, type, recipe FROM foods WHERE title = ?";
             List<Food> foods = new ArrayList<>();
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, search);
-            ResultSet rs = ps.executeQuery();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, search);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Food food = new Food();
                 food.setTitle(search);
@@ -135,24 +148,26 @@ public class FoodDaoImpl implements FoodDao {
                 food.setDescription(rs.getString("description"));
                 food.setPrice(rs.getDouble("price"));
                 food.setType(rs.getInt("type"));
+                food.setRecipe(rs.getString("recipe"));
                 foods.add(food);
             }
-            ps.close();
             return foods;
         } catch (SQLException e) {
-            e.getMessage();
-            return null;
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public List<Food> readByPrice(Double search) {
+    public List<Food> readByPrice(Double search) throws DaoException {
+        PreparedStatement statement = null;
         try {
-            String sql = "SELECT id, title, description, type FROM foods WHERE price = ?";
+            String sql = "SELECT id, title, description, type, recipe FROM foods WHERE price = ?";
             List<Food> foods = new ArrayList<>();
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setDouble(1, search);
-            ResultSet rs = ps.executeQuery();
+            statement = connection.prepareStatement(sql);
+            statement.setDouble(1, search);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Food food = new Food();
                 food.setPrice(search);
@@ -160,64 +175,71 @@ public class FoodDaoImpl implements FoodDao {
                 food.setId(rs.getInt("id"));
                 food.setDescription(rs.getString("description"));
                 food.setType(rs.getInt("type"));
+                food.setRecipe(rs.getString("recipe"));
                 foods.add(food);
             }
-            ps.close();
             return foods;
         } catch (SQLException e) {
-            e.getMessage();
-            return null;
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public List<Food> readByType(Integer typeNumber) {
+    public List<Food> readByType(Integer typeNumber) throws DaoException {
+        PreparedStatement statement = null;
         try {
-            String sql = "SELECT id, title, description, price FROM foods WHERE type = ?";
+            String sql = "SELECT id, title, description, price, recipe FROM foods WHERE type = ?";
             List<Food> foods = new ArrayList<>();
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, typeNumber);
-            ResultSet rs = ps.executeQuery();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, typeNumber);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Food food = new Food();
                 food.setType(typeNumber);
                 food.setTitle(rs.getString("title"));
                 food.setId(rs.getInt("id"));
                 food.setDescription(rs.getString("description"));
-                food.setPrice(typeNumber);
+                food.setPrice(rs.getDouble("price"));
+                food.setRecipe(rs.getString("recipe"));
                 foods.add(food);
             }
-            ps.close();
             return foods;
         } catch (SQLException e) {
-            e.getMessage();
-            return null;
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public void deleteByTitle(String title) {
+    public void deleteByTitle(String title) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "DELETE FROM foods WHERE title = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, title);
-            ps.executeUpdate();
-            ps.close();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, title);
+            statement.executeUpdate();
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 
     @Override
-    public void deleteByType(Integer typeNumber) {
+    public void deleteByType(Integer typeNumber) throws DaoException {
+        PreparedStatement statement = null;
         try {
             String sql = "DELETE FROM foods WHERE type = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, typeNumber);
-            ps.executeUpdate();
-            ps.close();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, typeNumber);
+            statement.executeUpdate();
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
         }
     }
 }

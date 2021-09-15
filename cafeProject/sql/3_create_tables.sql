@@ -53,6 +53,7 @@ CREATE TABLE foods (
 	title VARCHAR(50) NOT NULL UNIQUE,
 	description VARCHAR(500) NOT NULL,
 	price DOUBLE NOT NULL,
+	recipe VARCHAR(500) NOT NULL,
 
 	/*
      * 1 - dish
@@ -103,5 +104,29 @@ CREATE TABLE orders (
     ON UPDATE CASCADE
 	ON DELETE RESTRICT
 );
+
+CREATE TABLE ratings (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    client_id INTEGER NULL,
+    client_name VARCHAR(50) NOT NULL,
+    food_id INTEGER NOT NULL,
+    CONSTRAINT ratings_pk
+    PRIMARY KEY (id),
+    CONSTRAINT ratings_client_id_fk
+	FOREIGN KEY (client_id)
+    REFERENCES orders (client_id)
+    ON UPDATE CASCADE
+	ON DELETE RESTRICT,
+	CONSTRAINT ratings_client_name_fk
+	FOREIGN KEY (client_name)
+    REFERENCES orders (client_name)
+    ON UPDATE CASCADE
+	ON DELETE RESTRICT,
+	CONSTRAINT ratings_foods_ingredients_fk
+	FOREIGN KEY (food_id)
+    REFERENCES orders (food_id)
+    ON UPDATE CASCADE
+	ON DELETE RESTRICT
+)
 
 

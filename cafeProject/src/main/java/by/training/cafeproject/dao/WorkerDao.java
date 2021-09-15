@@ -1,16 +1,17 @@
 package by.training.cafeproject.dao;
 
-import by.training.cafeproject.entity.Worker;
+import by.training.cafeproject.dao.exception.DaoException;
+import by.training.cafeproject.domain.Worker;
 
 import java.sql.Date;
 import java.util.List;
 
 public interface WorkerDao extends Dao<Worker> {
-    List<Worker> readByStartDate(Date date);
+    List<Worker> readByStartDate(Date date) throws DaoException;
 
-    List<Worker> readByEndDate(Date date);
+    List<Worker> readByEndDate(Date date) throws DaoException;
 
-    List<Worker> readBySpecialization(String specialization);
+    List<Worker> readBySpecialization(String specialization) throws DaoException;
 
-    void deleteBySpecialization(String specialization);
+    void deleteBySpecialization(String specialization) throws DaoException;
 }

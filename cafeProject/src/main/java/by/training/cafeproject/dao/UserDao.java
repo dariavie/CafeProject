@@ -1,13 +1,10 @@
 package by.training.cafeproject.dao;
 
-import by.training.cafeproject.entity.User;
-
-import java.util.List;
+import by.training.cafeproject.dao.exception.DaoException;
+import by.training.cafeproject.domain.User;
 
 public interface UserDao extends Dao<User> {
-    User read(String login, String password);
+    User read(String login, String password) throws DaoException;
 
-    List<User> read();
-
-    void delete(String login, String password);
+    void delete(String login, String password) throws DaoException;
 }

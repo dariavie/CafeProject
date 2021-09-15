@@ -1,0 +1,2 @@
+2021-09-11 16:24:39.956 [main] ERROR by.training.cafeproject.dao.pool.ConnectionPool - The limit of number of database connections is exceeded
+2021-09-11 16:24:39.959 [main] ERROR by.training.cafeproject.dao.impl.TransactionImpl - java.lang.Exception
