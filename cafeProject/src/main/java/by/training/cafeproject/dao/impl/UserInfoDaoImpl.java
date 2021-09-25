@@ -40,6 +40,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
+                userInfo.setId(id);
                 userInfo.setUserId(new User(id));
                 userInfo.setSurname(rs.getString("surname"));
                 userInfo.setName(rs.getString("name"));
@@ -60,7 +61,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao {
         try {
             String sql = "UPDATE user_info SET name = ?, surname = ?, phone = ?, email = ? WHERE id = ?";
             statement = connection.prepareStatement(sql);
-            statement.setInt(5, entity.getId());
+            statement.setInt(5, entity.getUserId().getId());
             statement.setString(1, entity.getName());
             statement.setString(2, entity.getSurname());
             statement.setString(3, entity.getPhone());
@@ -83,6 +84,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao {
             List<UserInfo> userInfos = new ArrayList<>();
             while (rs.next()) {
                 UserInfo userInfo = new UserInfo();
+                userInfo.setId(rs.getInt("id"));
                 userInfo.setUserId(new User(rs.getInt("id")));
                 userInfo.setName(rs.getString("name"));
                 userInfo.setSurname(rs.getString("surname"));
@@ -139,6 +141,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 UserInfo userInfo = new UserInfo();
+                userInfo.setId(rs.getInt("id"));
                 userInfo.setName(name);
                 userInfo.setUserId(new User(rs.getInt("id")));
                 userInfo.setSurname(rs.getString("surname"));
@@ -165,6 +168,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 UserInfo userInfo = new UserInfo();
+                userInfo.setId(rs.getInt("id"));
                 userInfo.setName(surname);
                 userInfo.setUserId(new User(rs.getInt("id")));
                 userInfo.setName(rs.getString("name"));
@@ -190,6 +194,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao {
             statement.setString(1, phone);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
+                userInfo.setId(rs.getInt("id"));
                 userInfo.setPhone(phone);
                 userInfo.setUserId(new User(rs.getInt("id")));
                 userInfo.setName(rs.getString("name"));
@@ -214,6 +219,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao {
             statement.setString(1, email);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
+                userInfo.setId(rs.getInt("id"));
                 userInfo.setEmail(email);
                 userInfo.setUserId(new User(rs.getInt("id")));
                 userInfo.setName(rs.getString("name"));

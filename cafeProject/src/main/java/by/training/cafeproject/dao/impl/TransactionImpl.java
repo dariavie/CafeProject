@@ -3,12 +3,17 @@ package by.training.cafeproject.dao.impl;
 import by.training.cafeproject.dao.Transaction;
 import by.training.cafeproject.dao.exception.DaoException;
 import by.training.cafeproject.dao.pool.ConnectionPool;
+import com.mysql.cj.jdbc.MysqlDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Savepoint;
+import java.util.Properties;
 
 public class TransactionImpl implements Transaction {
     public static final Logger transactionImplLogger = LogManager.getLogger(TransactionImpl.class);
@@ -18,11 +23,13 @@ public class TransactionImpl implements Transaction {
     @Override
     public void initTransaction(BaseDaoImpl dao) {
         try {
+            transactionImplLogger.info("start of transaction init");
             if (connection == null) {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.init();
                 connection = connectionPool.getConnection();
                 dao.setConnection(connection);
+                transactionImplLogger.info("set connection");
             }
         } catch (Exception e) {
             transactionImplLogger.error(e);
@@ -35,7 +42,7 @@ public class TransactionImpl implements Transaction {
             if (connection == null) {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.init();
-                connection = ConnectionPool.getInstance().getConnection();
+                connection = connectionPool.getConnection();
             }
             connection.setAutoCommit(false);
         } catch (Exception e) {

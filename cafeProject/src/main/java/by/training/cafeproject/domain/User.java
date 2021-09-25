@@ -44,14 +44,15 @@ public class User extends Entity {
     }
 
     public int getRoleNumber() {
+        int number = -1;
         if (role.equals(Role.ADMINISTRATOR)) {
-            return 0;
+            number = 0;
         } else if (role.equals(Role.WORKER)) {
-            return 1;
+            number = 1;
         } else if (role.equals(Role.CLIENT)) {
-            return 2;
+            number = 2;
         }
-        return -1;
+        return number;
     }
 
     @Override

@@ -12,45 +12,51 @@ public class ServiceFactoryImpl implements ServiceFactory {
     private final RatingService ratingService = new RatingServiceImpl();
     private final UserInfoService userInfoService = new UserInfoServiceImpl();
     private final UserService userService = new UserServiceImpl();
-    private final WorkerService workerService = new WorkerServiceImpl(); 
+    private final WorkerService workerService = new WorkerServiceImpl();
+
+    private ServiceFactoryImpl() {}
+
+    public static ServiceFactoryImpl getInstance() {
+        return instance;
+    }
 
     @Override
     public FoodIngredientService getFoodIngredientService() {
-        return null;
+        return foodIngredientService;
     }
 
     @Override
     public FoodService getFoodService() {
-        return null;
+        return foodService;
     }
 
     @Override
     public IngredientService getIngredientService() {
-        return null;
+        return ingredientService;
     }
 
     @Override
     public OrderService getOrderService() {
-        return null;
+        return orderService;
     }
 
     @Override
     public RatingService getRatingService() {
-        return null;
+        return ratingService;
     }
 
     @Override
     public UserInfoService getUserInfoService() {
-        return null;
+        return userInfoService;
     }
 
     @Override
     public UserService getUserService() {
-        return null;
+        return userService;
     }
 
     @Override
     public WorkerService getWorkerService() {
-        return null;
+        return workerService;
     }
 }

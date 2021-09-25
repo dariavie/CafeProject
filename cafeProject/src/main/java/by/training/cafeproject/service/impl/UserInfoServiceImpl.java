@@ -39,7 +39,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         try {
             transaction.initTransaction(userInfoDao, userDao);
             UserInfo userInfo = userInfoDao.read(id);
-            userInfo.setUserId(userDao.read(id));
+            User user = userDao.read(id);
+            userInfo.setUserId(user);
             transaction.commit();
             return userInfo;
         } catch (DaoException e) {
@@ -70,9 +71,11 @@ public class UserInfoServiceImpl implements UserInfoService {
             int userId;
             User user;
             for (UserInfo userInfo : userInfos) {
-                userId = userInfo.getId();
-                user = userDao.read(userId);
-                userInfo.setUserId(user);
+                if (userInfo.getId()!=null) {
+                    userId = userInfo.getId();
+                    user = userDao.read(userId);
+                    userInfo.setUserId(user);
+                }
             }
             transaction.commit();
             return userInfos;
@@ -116,9 +119,11 @@ public class UserInfoServiceImpl implements UserInfoService {
             int userId;
             User user;
             for (UserInfo userInfo : userInfos) {
-                userId = userInfo.getId();
-                user = userDao.read(userId);
-                userInfo.setUserId(user);
+                if (userInfo.getId()!=null) {
+                    userId = userInfo.getId();
+                    user = userDao.read(userId);
+                    userInfo.setUserId(user);
+                }
             }
             transaction.commit();
             return userInfos;
@@ -138,9 +143,11 @@ public class UserInfoServiceImpl implements UserInfoService {
             int userId;
             User user;
             for (UserInfo userInfo : userInfos) {
-                userId = userInfo.getId();
-                user = userDao.read(userId);
-                userInfo.setUserId(user);
+                if (userInfo.getId()!=null) {
+                    userId = userInfo.getId();
+                    user = userDao.read(userId);
+                    userInfo.setUserId(user);
+                }
             }
             transaction.commit();
             return userInfos;
@@ -157,10 +164,15 @@ public class UserInfoServiceImpl implements UserInfoService {
         try {
             transaction.initTransaction(userInfoDao, userDao);
             UserInfo userInfo = userInfoDao.readByPhone(phone);
-            User user = userDao.read(userInfo.getId());
-            userInfo.setUserId(user);
-            transaction.commit();
-            return userInfo;
+            if (userInfo.getId()==null) {
+                transaction.commit();
+                return null;
+            } else {
+                User user = userDao.read(userInfo.getId());
+                userInfo.setUserId(user);
+                transaction.commit();
+                return userInfo;
+            }
         } catch (DaoException e) {
             transaction.rollback();
             throw new ServiceException(e);
@@ -174,10 +186,15 @@ public class UserInfoServiceImpl implements UserInfoService {
         try {
             transaction.initTransaction(userInfoDao, userDao);
             UserInfo userInfo = userInfoDao.readByEmail(email);
-            User user = userDao.read(userInfo.getId());
-            userInfo.setUserId(user);
-            transaction.commit();
-            return userInfo;
+            if (userInfo.getId()==null) {
+                transaction.commit();
+                return null;
+            } else {
+                User user = userDao.read(userInfo.getId());
+                userInfo.setUserId(user);
+                transaction.commit();
+                return userInfo;
+            }
         } catch (DaoException e) {
             transaction.rollback();
             throw new ServiceException(e);

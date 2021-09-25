@@ -1,11 +1,21 @@
 package by.training.cafeproject.dao.pool;
 
+import by.training.cafeproject.dao.impl.MySqlFactory;
+import com.mysql.cj.jdbc.MysqlDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
@@ -73,15 +83,17 @@ final public class ConnectionPool {
 
     public synchronized void init() throws Exception {
         try {
+            logger.info("start of connection pool init");
             destroy();
             ResourceBundle resource = ResourceBundle.getBundle("db");
-            Class.forName(resource.getString("db.driver"));
-            this.url = resource.getString("db.url");
-            this.user = resource.getString("db.user");
-            this.password = resource.getString("db.password");
-            this.maxSize = Integer.parseInt(resource.getString("db.maxSize"));
-            this.checkConnectionTimeout = Integer.parseInt(resource.getString("db.connectionTimeout"));
-            int startSize = Integer.parseInt(resource.getString("db.startSize"));
+//            Class.forName(resource.getString("driverClassName"));
+            this.url = resource.getString("url");
+            this.user = resource.getString("username");
+            this.password = resource.getString("password");
+            this.maxSize = Integer.parseInt(resource.getString("maxActive"));
+            this.checkConnectionTimeout = Integer.parseInt(resource.getString("maxWait"));
+            int startSize = Integer.parseInt(resource.getString("maxIdle"));
+            logger.info("all data is set");
             for(int counter = 0; counter < startSize; counter++) {
                 freeConnections.put(createConnection());
             }
@@ -97,8 +109,17 @@ final public class ConnectionPool {
         return instance;
     }
 
-    private PooledConnection createConnection() throws SQLException {
-        return new PooledConnection(DriverManager.getConnection(url, user, password));
+    private PooledConnection createConnection() throws SQLException, NamingException {
+        logger.info("create connection in pool");
+            Context context = new InitialContext();
+            logger.info("context");
+            DataSource ds = (DataSource) context.lookup("java:comp/env/jdbc/cafe_db");
+        logger.info("ds");
+        PooledConnection con = new PooledConnection(ds.getConnection());
+        logger.info("con");
+        return con;
+//            return new PooledConnection(ds.getConnection());
+//        return new PooledConnection(DriverManager.getConnection(url, user, password));
     }
 
     public synchronized void destroy() {

@@ -2,29 +2,47 @@ package by.training.cafeproject.dao.impl;
 
 import by.training.cafeproject.dao.UserDao;
 import by.training.cafeproject.dao.exception.DaoException;
+import by.training.cafeproject.dao.pool.ConnectionPool;
 import by.training.cafeproject.domain.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoImpl extends BaseDaoImpl implements UserDao {
+    private static final Logger userDaoImplLogger = LogManager.getLogger(UserDaoImpl.class);
 
     @Override
     public void create(User entity) throws DaoException {
+        userDaoImplLogger.info("came into create dao ");
         PreparedStatement statement = null;
         try {
+            userDaoImplLogger.info("user dao create start");
             String sql = "INSERT INTO users (id, login, password, role) VALUES (?,?,?,?)";
+            userDaoImplLogger.info("string sql completed");
             statement = connection.prepareStatement(sql);
+            userDaoImplLogger.info("prepare statement completed");
             statement.setInt(1, entity.getId());
+            userDaoImplLogger.info("set id completed");
             statement.setString(2, entity.getLogin());
+            userDaoImplLogger.info("set login completed");
             statement.setString(3, entity.getPassword());
+            userDaoImplLogger.info("set pass completed");
             statement.setInt(4, entity.getRoleNumber());
+            userDaoImplLogger.info("set role completed");
             statement.executeUpdate();
+            userDaoImplLogger.info("executeupdate completed");
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
             this.closePreparedStatement(statement);
+            userDaoImplLogger.info("statement closed completed");
         }
     }
 
@@ -83,6 +101,29 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 user.setLogin(login);
                 user.setPassword(password);
                 user.setId(rs.getInt("id"));
+                user.setRole(rs.getInt("role"));
+            }
+            return user;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            this.closePreparedStatement(statement);
+        }
+    }
+
+    @Override
+    public User readByLogin(String login) throws DaoException {
+        PreparedStatement statement = null;
+        try {
+            String sql = "SELECT id, role, password FROM users WHERE login = ?";
+            User user = new User();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, login);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                user.setLogin(login);
+                user.setId(rs.getInt("id"));
+                user.setPassword(rs.getString("password"));
                 user.setRole(rs.getInt("role"));
             }
             return user;

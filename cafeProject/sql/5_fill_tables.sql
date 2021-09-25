@@ -70,11 +70,11 @@ INSERT INTO workers (
     specialization
 ) VALUES (
     3,
-    '2020-09-11',
+    2020-09-11,
     'meat'
 ), (
     5,
-    '2018-12-15',
+    2018-12-15,
     'bakery'
 );
 
