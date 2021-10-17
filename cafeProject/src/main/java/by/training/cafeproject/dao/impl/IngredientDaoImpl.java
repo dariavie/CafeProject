@@ -9,20 +9,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IngredientDaoImpl extends BaseDaoImpl implements IngredientDao {
+    private static final String SQL_CREATE = "INSERT INTO ingredients (title) VALUES (?)";
+    private static final String SQL_READ_BY_ID = "SELECT title FROM ingredients WHERE id = ?";
+    private static final String SQL_UPDATE = "UPDATE ingredients SET title = ? WHERE id = ?";
+    private static final String SQL_READ_ALL = "SELECT id, title FROM ingredients";
+    private static final String SQL_DELETE_BY_ID = "DELETE FROM ingredients WHERE id = ?";
+    private static final String SQL_READ_BY_TITLE = "SELECT id FROM ingredients WHERE title = ?";
+    private static final String SQL_DELETE_BY_TITLE = "DELETE FROM ingredients WHERE title = ?";
 
     @Override
-    public void create(Ingredient entity) throws DaoException {
+    public Integer create(Ingredient entity) throws DaoException {
         PreparedStatement statement = null;
         try {
-            String sql = "INSERT INTO ingredients (id, title) VALUES (?,?)";
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, entity.getId());
-            statement.setString(2, entity.getTitle());
+            statement = connection.prepareStatement(SQL_CREATE);
+            statement.setString(1, entity.getTitle());
             statement.executeUpdate();
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                entity.setId(rs.getInt("id"));
+            }
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
             this.closePreparedStatement(statement);
+            return entity.getId();
         }
     }
 
@@ -30,9 +40,8 @@ public class IngredientDaoImpl extends BaseDaoImpl implements IngredientDao {
     public Ingredient read(Integer id) throws DaoException {
         PreparedStatement statement = null;
         try {
-            String sql = "SELECT title FROM ingredients WHERE id = ?";
             Ingredient ingredient = new Ingredient();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(SQL_READ_BY_ID);
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -51,8 +60,7 @@ public class IngredientDaoImpl extends BaseDaoImpl implements IngredientDao {
     public void update(Ingredient entity) throws DaoException {
         PreparedStatement statement = null;
         try {
-            String sql = "UPDATE ingredients SET title = ? WHERE id = ?";
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(SQL_UPDATE);
             statement.setInt(2, entity.getId());
             statement.setString(1, entity.getTitle());
             statement.executeUpdate();
@@ -68,9 +76,8 @@ public class IngredientDaoImpl extends BaseDaoImpl implements IngredientDao {
     public List<Ingredient> read() throws DaoException {
         Statement statement = null;
         try {
-            String sql = "SELECT id, title FROM ingredients";
             statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
+            ResultSet rs = statement.executeQuery(SQL_READ_ALL);
             List<Ingredient> ingredients = new ArrayList<>();
             while (rs.next()) {
                 Ingredient ingredient = new Ingredient();
@@ -90,8 +97,7 @@ public class IngredientDaoImpl extends BaseDaoImpl implements IngredientDao {
     public void delete(Integer id) throws DaoException {
         PreparedStatement statement = null;
         try {
-            String sql = "DELETE FROM ingredients WHERE id = ?";
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(SQL_DELETE_BY_ID);
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -102,36 +108,18 @@ public class IngredientDaoImpl extends BaseDaoImpl implements IngredientDao {
     }
 
     @Override
-    public void delete(Ingredient entity) throws DaoException {
+    public Ingredient readByTitle(String search) throws DaoException {
         PreparedStatement statement = null;
         try {
-            String sql = "DELETE FROM ingredients WHERE id = ?";
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, entity.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        } finally {
-            this.closePreparedStatement(statement);
-        }
-    }
-
-    @Override
-    public List<Ingredient> readByTitle(String search) throws DaoException {
-        PreparedStatement statement = null;
-        try {
-            List<Ingredient> ingredients = new ArrayList<>();
-            String sql = "SELECT id FROM ingredients WHERE title = ?";
-            statement = connection.prepareStatement(sql);
+            Ingredient ingredient = new Ingredient();
+            statement = connection.prepareStatement(SQL_READ_BY_TITLE);
             statement.setString(1, search);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Ingredient ingredient = new Ingredient();
                 ingredient.setTitle(search);
                 ingredient.setId(rs.getInt("id"));
-                ingredients.add(ingredient);
             }
-            return ingredients;
+            return ingredient;
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -143,8 +131,7 @@ public class IngredientDaoImpl extends BaseDaoImpl implements IngredientDao {
     public void deleteByTitle(String title) throws DaoException {
         PreparedStatement statement = null;
         try {
-            String sql = "DELETE FROM ingredients WHERE title = ?";
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(SQL_DELETE_BY_TITLE);
             statement.setString(1, title);
             statement.executeUpdate();
         } catch (SQLException e) {

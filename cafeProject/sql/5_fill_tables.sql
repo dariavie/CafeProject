@@ -141,12 +141,18 @@ VALUES
 (3, 15, 'a teaspoon')
 
 INSERT INTO orders
-(worker_id, client_id, client_name, food_id)
+(client_id, price, status)
 VALUES
-(3, 5, 'John', 1),
-(2, 5, 'John', 3)
+(5, 34.44, 2),
+(5, 21.99, 2),
+(6, 44.44, 2)
 
-INSERT INTO orders
-(worker_id, client_name, food_id)
-VALUES
-(3, 'Dina', 2)
+insert into orders_foods
+(order_id, food_id)
+values
+(7, 3),
+(7, 4),
+(8, 1),
+(8, 2),
+(8, 3),
+(9, 4)

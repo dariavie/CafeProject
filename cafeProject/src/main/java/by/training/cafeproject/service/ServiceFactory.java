@@ -1,19 +1,10 @@
 package by.training.cafeproject.service;
 
+import by.training.cafeproject.exception.PersistentException;
+import by.training.cafeproject.service.exception.ServiceException;
+
 public interface ServiceFactory {
-    FoodIngredientService getFoodIngredientService();
+    <Type extends Service> Type getService(Class<Type> key) throws ServiceException;
 
-    FoodService getFoodService();
-
-    IngredientService getIngredientService();
-
-    OrderService getOrderService();
-
-    RatingService getRatingService();
-
-    UserInfoService getUserInfoService();
-
-    UserService getUserService();
-
-    WorkerService getWorkerService();
+    void close();
 }

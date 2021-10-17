@@ -6,7 +6,6 @@ import java.util.Objects;
 
 public class Ingredient extends Entity {
     private String title;
-    private List<Food> foods = new ArrayList<>();
 
     public Ingredient() {}
 
@@ -16,14 +15,6 @@ public class Ingredient extends Entity {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setFoods(List<Food> foods) {
-        this.foods = foods;
-    }
-
-    public List<Food> getFoods() {
-        return foods;
     }
 
     public String getTitle() {
@@ -47,9 +38,7 @@ public class Ingredient extends Entity {
     @Override
     public String toString() {
         return "Ingredient{" +
-                "id='" + getId() + '\'' +
-                ", title='" + title + '\'' +
-                '}';
+                "title='" + title + '\'' +
+                "} " + super.toString();
     }
 }
-

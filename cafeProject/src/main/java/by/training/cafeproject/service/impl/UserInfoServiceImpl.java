@@ -2,6 +2,7 @@ package by.training.cafeproject.service.impl;
 
 import by.training.cafeproject.dao.Transaction;
 import by.training.cafeproject.dao.TransactionFactory;
+import by.training.cafeproject.dao.UserDao;
 import by.training.cafeproject.dao.UserInfoDao;
 import by.training.cafeproject.dao.exception.DaoException;
 import by.training.cafeproject.dao.impl.DaoFactoryImpl;
@@ -10,220 +11,120 @@ import by.training.cafeproject.dao.impl.UserDaoImpl;
 import by.training.cafeproject.dao.impl.UserInfoDaoImpl;
 import by.training.cafeproject.domain.User;
 import by.training.cafeproject.domain.UserInfo;
+import by.training.cafeproject.exception.PersistentException;
 import by.training.cafeproject.service.UserInfoService;
 import by.training.cafeproject.service.exception.ServiceException;
+import org.apache.log4j.Logger;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class UserInfoServiceImpl implements UserInfoService {
-    private DaoFactoryImpl daoFactoryObject = DaoFactoryImpl.getInstance();
-    private UserInfoDaoImpl userInfoDao = daoFactoryObject.getUserInfoDao();
-    private UserDaoImpl userDao = daoFactoryObject.getUserDao();
-    private TransactionFactory transactionFactoryObject = TransactionFactoryImpl.getInstance();
-    private Transaction transaction = transactionFactoryObject.getTransaction();
+public class UserInfoServiceImpl extends ServiceImpl implements UserInfoService {
+    private static final Logger logger = Logger.getLogger(UserInfoServiceImpl.class);
 
     @Override
-    public void create(UserInfo entity) throws ServiceException {
+    public List<UserInfo> findAll() throws ServiceException {
         try {
-            transaction.initTransaction(userInfoDao);
-            userInfoDao.create(entity);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public UserInfo read(Integer id) throws ServiceException {
-        try {
-            transaction.initTransaction(userInfoDao, userDao);
-            UserInfo userInfo = userInfoDao.read(id);
-            User user = userDao.read(id);
-            userInfo.setUserId(user);
-            transaction.commit();
-            return userInfo;
-        } catch (DaoException e) {
-            transaction.rollback();
-            throw new ServiceException(e);
-        } finally {
-            transaction.endTransaction();
-        }
-    }
-
-    @Override
-    public void update(UserInfo entity) throws ServiceException {
-        try {
-            transaction.initTransaction(userInfoDao);
-            userInfoDao.update(entity);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public List<UserInfo> read() throws ServiceException {
-        try {
-            transaction.initTransaction(userInfoDao, userDao);
-            List<UserInfo> userInfos = userInfoDao.read();
-            int userId;
-            User user;
-            for (UserInfo userInfo : userInfos) {
-                if (userInfo.getId()!=null) {
-                    userId = userInfo.getId();
-                    user = userDao.read(userId);
-                    userInfo.setUserId(user);
-                }
-            }
-            transaction.commit();
+            UserInfoDao dao = transaction.createDao(UserInfoDao.class);
+            List<UserInfo> userInfos = dao.read();
+            buildUserInfo(userInfos);
             return userInfos;
-        } catch (DaoException e) {
-            transaction.rollback();
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.endTransaction();
+        }
+    }
+
+    @Override
+    public UserInfo findById(Integer id) throws ServiceException {
+        try {
+            UserInfoDao dao = transaction.createDao(UserInfoDao.class);
+            UserInfo userInfo = dao.read(id);
+            if (userInfo != null) {
+                buildUserInfo(Arrays.asList(userInfo));
+            }
+            return userInfo;
+        } catch (DaoException | PersistentException e) {
+            throw new ServiceException(e);
         }
     }
 
     @Override
     public void delete(Integer id) throws ServiceException {
         try {
-            transaction.initTransaction(userInfoDao);
-            userInfoDao.delete(id);
-        } catch (DaoException e) {
+            UserInfoDao dao = transaction.createDao(UserInfoDao.class);
+            dao.delete(id);
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public void delete(UserInfo entity) throws ServiceException {
+    public UserInfo findByPhone(String phone) throws ServiceException {
         try {
-            transaction.initTransaction(userInfoDao);
-            userInfoDao.delete(entity);
-        } catch (DaoException e) {
+            UserInfoDao dao = transaction.createDao(UserInfoDao.class);
+            UserInfo userInfo = dao.readByPhone(phone);
+            if (userInfo != null) {
+                buildUserInfo(Arrays.asList(userInfo));
+            }
+            return userInfo;
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public List<UserInfo> readByName(String name) throws ServiceException {
+    public UserInfo findByEmail(String email) throws ServiceException {
         try {
-            transaction.initTransaction(userInfoDao, userDao);
-            List<UserInfo> userInfos = userInfoDao.readByName(name);
-            int userId;
+            UserInfoDao dao = transaction.createDao(UserInfoDao.class);
+            UserInfo userInfo = dao.readByEmail(email);
+            if (userInfo != null) {
+                buildUserInfo(Arrays.asList(userInfo));
+            }
+            return userInfo;
+        } catch (DaoException | PersistentException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void save(UserInfo userInfo) throws ServiceException {
+        try {
+            UserInfoDao dao = transaction.createDao(UserInfoDao.class);
+            if (userInfo.getId() != null) {
+                logger.info("update in dao, first: " + userInfo);
+                dao.update(userInfo);
+                logger.info("update in dao, result: " + userInfo);
+            } else {
+                logger.info("create in dao, first: " + userInfo);
+                userInfo.setId(dao.create(userInfo));
+                logger.info("create in dao, result: " + userInfo);
+            }
+        } catch (DaoException | PersistentException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    private void buildUserInfo(List<UserInfo> userInfos) throws ServiceException {
+        try {
+            UserDao userDao = transaction.createDao(UserDao.class);
+            Map<Integer, User> users = new HashMap<>();
             User user;
+            Integer id;
             for (UserInfo userInfo : userInfos) {
-                if (userInfo.getId()!=null) {
-                    userId = userInfo.getId();
-                    user = userDao.read(userId);
+                user = userInfo.getUserId();
+                if (user != null) {
+                    id = user.getId();
+                    user = users.get(id);
+                    if (user == null) {
+                        user = userDao.read(id);
+                    }
                     userInfo.setUserId(user);
                 }
             }
-            transaction.commit();
-            return userInfos;
-        } catch (DaoException e) {
-            transaction.rollback();
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.endTransaction();
-        }
-    }
-
-    @Override
-    public List<UserInfo> readBySurname(String surname) throws ServiceException {
-        try {
-            transaction.initTransaction(userInfoDao, userDao);
-            List<UserInfo> userInfos = userInfoDao.readBySurname(surname);
-            int userId;
-            User user;
-            for (UserInfo userInfo : userInfos) {
-                if (userInfo.getId()!=null) {
-                    userId = userInfo.getId();
-                    user = userDao.read(userId);
-                    userInfo.setUserId(user);
-                }
-            }
-            transaction.commit();
-            return userInfos;
-        } catch (DaoException e) {
-            transaction.rollback();
-            throw new ServiceException(e);
-        } finally {
-            transaction.endTransaction();
-        }
-    }
-
-    @Override
-    public UserInfo readByPhone(String phone) throws ServiceException {
-        try {
-            transaction.initTransaction(userInfoDao, userDao);
-            UserInfo userInfo = userInfoDao.readByPhone(phone);
-            if (userInfo.getId()==null) {
-                transaction.commit();
-                return null;
-            } else {
-                User user = userDao.read(userInfo.getId());
-                userInfo.setUserId(user);
-                transaction.commit();
-                return userInfo;
-            }
-        } catch (DaoException e) {
-            transaction.rollback();
-            throw new ServiceException(e);
-        } finally {
-            transaction.endTransaction();
-        }
-    }
-
-    @Override
-    public UserInfo readByEmail(String email) throws ServiceException {
-        try {
-            transaction.initTransaction(userInfoDao, userDao);
-            UserInfo userInfo = userInfoDao.readByEmail(email);
-            if (userInfo.getId()==null) {
-                transaction.commit();
-                return null;
-            } else {
-                User user = userDao.read(userInfo.getId());
-                userInfo.setUserId(user);
-                transaction.commit();
-                return userInfo;
-            }
-        } catch (DaoException e) {
-            transaction.rollback();
-            throw new ServiceException(e);
-        } finally {
-            transaction.endTransaction();
-        }
-    }
-
-    @Override
-    public void deleteByPhone(String phone) throws ServiceException {
-        try {
-            transaction.initTransaction(userInfoDao);
-            userInfoDao.deleteByPhone(phone);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public void deleteByEmail(String email) throws ServiceException {
-        try {
-            transaction.initTransaction(userInfoDao);
-            userInfoDao.deleteByEmail(email);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 }

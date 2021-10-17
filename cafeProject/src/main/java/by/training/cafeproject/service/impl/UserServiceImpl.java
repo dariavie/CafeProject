@@ -2,137 +2,95 @@ package by.training.cafeproject.service.impl;
 
 import by.training.cafeproject.dao.Transaction;
 import by.training.cafeproject.dao.TransactionFactory;
+import by.training.cafeproject.dao.UserDao;
 import by.training.cafeproject.dao.exception.DaoException;
 import by.training.cafeproject.dao.impl.DaoFactoryImpl;
 import by.training.cafeproject.dao.impl.TransactionFactoryImpl;
 import by.training.cafeproject.dao.impl.UserDaoImpl;
 import by.training.cafeproject.domain.User;
+import by.training.cafeproject.exception.PersistentException;
 import by.training.cafeproject.service.UserService;
 import by.training.cafeproject.service.exception.ServiceException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.util.Formatter;
 import java.util.List;
 
-public class UserServiceImpl implements UserService {
-    private DaoFactoryImpl daoFactoryObject = DaoFactoryImpl.getInstance();
-    private UserDaoImpl userDao = daoFactoryObject.getUserDao();
-    private TransactionFactory transactionFactoryObject = TransactionFactoryImpl.getInstance();
-    private Transaction transaction = transactionFactoryObject.getTransaction();
-    private static final Logger userServiceImplLogger = LogManager.getLogger(UserServiceImpl.class);
-
+public class UserServiceImpl extends ServiceImpl implements UserService {
     @Override
-    public void create(User entity) throws ServiceException {
+    public List<User> findAll() throws ServiceException {
         try {
-            userServiceImplLogger.info("service create start");
-            transaction.initTransaction(userDao);
-            userServiceImplLogger.info("service create transaction start");
-            userDao.create(entity);
-            userServiceImplLogger.info("service userdao create start");
-        } catch (DaoException e) {
+            UserDao dao = transaction.createDao(UserDao.class);
+            return dao.read();
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public User read(Integer id) throws ServiceException {
+    public User findByIdentity(Integer identity) throws ServiceException {
         try {
-            transaction.initTransaction(userDao);
-            return userDao.read(id);
-        } catch (DaoException e) {
+            UserDao dao = transaction.createDao(UserDao.class);
+            return dao.read(identity);
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public void update(User entity) throws ServiceException {
+    public User findByLoginAndPassword(String login, String password) throws ServiceException {
         try {
-            transaction.initTransaction(userDao);
-            userDao.update(entity);
-        } catch (DaoException e) {
+            UserDao dao = transaction.createDao(UserDao.class);
+            return dao.read(login, password);
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public List<User> read() throws ServiceException {
+    public User findByLogin(String login) throws ServiceException {
         try {
-            transaction.initTransaction(userDao);
-            return userDao.read();
-        } catch (DaoException e) {
+            UserDao dao = transaction.createDao(UserDao.class);
+            return dao.readByLogin(login);
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public void delete(Integer id) throws ServiceException {
+    public void save(User user) throws ServiceException {
         try {
-            transaction.initTransaction(userDao);
-            userDao.delete(id);
-        } catch (DaoException e) {
+            UserDao dao = transaction.createDao(UserDao.class);
+            if (user.getId() != null) {
+                if (user.getPassword() != null) {
+                    user.setPassword(user.getPassword());
+                } else {
+                    User oldUser = dao.read(user.getId());
+                    user.setPassword(oldUser.getPassword());
+                }
+                dao.update(user);
+            } else {
+//                user.setPassword(new String());
+                user.setId(dao.create(user));
+            }
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public void delete(User entity) throws ServiceException {
+    public void delete(Integer identity) throws ServiceException {
         try {
-            transaction.initTransaction(userDao);
-            userDao.delete(entity);
-        } catch (DaoException e) {
+            UserDao dao = transaction.createDao(UserDao.class);
+            dao.delete(identity);
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public User read(String login, String password) throws ServiceException {
-        try {
-            transaction.initTransaction(userDao);
-            return userDao.read(login, password);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public User readByLogin(String login) throws ServiceException {
-        try {
-            transaction.initTransaction(userDao);
-            return userDao.readByLogin(login);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public void delete(String login, String password) throws ServiceException {
-        try {
-            transaction.initTransaction(userDao);
-            userDao.delete(login, password);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 }
+

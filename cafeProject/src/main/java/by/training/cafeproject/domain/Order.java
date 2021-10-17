@@ -1,67 +1,57 @@
 package by.training.cafeproject.domain;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Order extends Entity {
-    private Worker workerId;
-    private User clientId;
-    private Food foodId;
-    private String clientName;
+    private UserInfo clientId;
+    private Double price;
+    private OrderStatus orderStatus;
+    private ArrayList<Food> foods;
 
-    public void setWorkerId(Worker worker) {
-        this.workerId = worker;
+    public Order() {}
+
+    public Order(Integer id) {
+        setId(id);
     }
-
-    public void setClientId(User client) {
+    public void setClientId(UserInfo client) {
         this.clientId = client;
     }
 
-    public void setFoodId(Food food) {
-        this.foodId = food;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
-    public Worker getWorkerId() {
-        return workerId;
+    public void setFoods(ArrayList<Food> foods) {
+        this.foods = foods;
     }
 
-    public User getClientId() {
+    public UserInfo getClientId() {
         return clientId;
     }
 
-    public Food getFoodId() {
-        return foodId;
+    public Double getPrice() {
+        return price;
     }
 
-    public String getClientName() {
-        return clientName;
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Order order = (Order) o;
-        return Objects.equals(workerId, order.workerId) && Objects.equals(clientId, order.clientId) && Objects.equals(foodId, order.foodId) && Objects.equals(clientName, order.clientName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), workerId, clientId, foodId, clientName);
+    public ArrayList<Food> getFoods() {
+        return foods;
     }
 
     @Override
     public String toString() {
         return "Order{" +
-                "id='" + getId() + '\'' +
-                ", worker=" + workerId +
-                ", client=" + clientId +
-                ", food=" + foodId +
-                ", clientName='" + clientName + '\'' +
+                "clientId=" + clientId +
+                ", price=" + price +
+                ", orderStatus=" + orderStatus +
                 "} " + super.toString();
     }
 }

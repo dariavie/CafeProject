@@ -5,16 +5,16 @@ import by.training.cafeproject.service.exception.ServiceException;
 
 import java.util.List;
 
-public interface UserInfoService extends Service<UserInfo> {
-    List<UserInfo> readByName(String name) throws ServiceException;
+public interface UserInfoService extends Service {
+    List<UserInfo> findAll() throws ServiceException;
 
-    List<UserInfo> readBySurname(String surname) throws ServiceException;
+    UserInfo findById(Integer id) throws ServiceException;
 
-    UserInfo readByPhone(String phone) throws ServiceException;
+    void delete(Integer id) throws ServiceException;
 
-    UserInfo readByEmail(String email) throws ServiceException;
+    UserInfo findByPhone(String phone) throws ServiceException;
 
-    void deleteByPhone(String phone) throws ServiceException;
+    UserInfo findByEmail(String email) throws ServiceException;
 
-    void deleteByEmail(String email) throws ServiceException;
+    void save(UserInfo userInfo) throws ServiceException;
 }

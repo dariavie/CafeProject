@@ -15,8 +15,6 @@ public interface DaoFactory {
 
     OrderDao getOrderDao();
 
-    RatingDao getRatingDao();
-
     UserDao getUserDao();
 
     UserInfoDao getUserInfoDao();

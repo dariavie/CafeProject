@@ -9,9 +9,14 @@ public class UserInfo extends Entity {
     private String phone;
     private String email;
 
+    public UserInfo() {}
+
+    public UserInfo(Integer id) {
+        setId(id);
+    }
+
     public void setUserId(User id) {
         this.userId = id;
-        setId(id.getId());
     }
 
     public void setSurname(String surname) {

@@ -1,6 +1,9 @@
 package by.training.cafeproject.dao;
 
-public interface TransactionFactory {
+import by.training.cafeproject.exception.PersistentException;
 
-    Transaction getTransaction();
+public interface TransactionFactory {
+    Transaction createTransaction() throws PersistentException;
+
+    void close();
 }

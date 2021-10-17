@@ -4,181 +4,127 @@ import by.training.cafeproject.dao.*;
 import by.training.cafeproject.dao.exception.DaoException;
 import by.training.cafeproject.dao.impl.*;
 import by.training.cafeproject.domain.*;
+import by.training.cafeproject.exception.PersistentException;
 import by.training.cafeproject.service.WorkerService;
 import by.training.cafeproject.service.exception.ServiceException;
+import org.apache.log4j.Logger;
 
 import java.sql.Date;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class WorkerServiceImpl implements WorkerService {
-    private DaoFactoryImpl daoFactoryObject = DaoFactoryImpl.getInstance();
-    private WorkerDaoImpl workerDao = daoFactoryObject.getWorkerDao();
-    private UserInfoDaoImpl userInfoDao = daoFactoryObject.getUserInfoDao();
-    private TransactionFactory transactionFactoryObject = TransactionFactoryImpl.getInstance();
-    private Transaction transaction = transactionFactoryObject.getTransaction();
+public class WorkerServiceImpl extends ServiceImpl implements WorkerService {
+    private static final Logger logger = Logger.getLogger(WorkerServiceImpl.class);
 
     @Override
-    public void create(Worker entity) throws ServiceException {
+    public void save(Worker worker) throws ServiceException {
         try {
-            transaction.initTransaction(workerDao);
-            workerDao.create(entity);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public Worker read(Integer id) throws ServiceException {
-        try {
-            transaction.initTransaction(workerDao, userInfoDao);
-            Worker worker = workerDao.read(id);
-            UserInfo userInfo = userInfoDao.read(worker.getId());
-            worker.setUserInfoId(userInfo);
-            transaction.commit();
-            return worker;
-        } catch (DaoException e) {
-            transaction.rollback();
-            throw new ServiceException(e);
-        } finally {
-            transaction.endTransaction();
-        }
-    }
-
-    @Override
-    public void update(Worker entity) throws ServiceException {
-        try {
-            transaction.initTransaction(workerDao);
-            workerDao.update(entity);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public List<Worker> read() throws ServiceException {
-        try {
-            transaction.initTransaction(workerDao, userInfoDao);
-            List<Worker> workers = workerDao.read();
-            int userInfoId;
-            UserInfo userInfo;
-            for (Worker worker : workers) {
-                userInfoId = worker.getUserInfoId().getId();
-                userInfo = userInfoDao.read(userInfoId);
-                worker.setUserInfoId(userInfo);
+            WorkerDao dao = transaction.createDao(WorkerDao.class);
+            if (worker.getId() != null) {
+                logger.info("start of worker service update");
+                dao.update(worker);
+            } else {
+                logger.info("start of worker service create");
+                worker.setId(dao.create(worker));
             }
-            transaction.commit();
-            return workers;
-        } catch (DaoException e) {
-            transaction.rollback();
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.endTransaction();
+        }
+    }
+
+    @Override
+    public Worker findById(Integer id) throws ServiceException {
+        try {
+            WorkerDao dao = transaction.createDao(WorkerDao.class);
+            Worker worker = dao.read(id);
+            logger.info("worker1: " + worker);
+            if (worker != null) {
+                buildWorker(Arrays.asList(worker));
+            }
+            logger.info("worker2: " + worker);
+            return worker;
+        } catch (DaoException | PersistentException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Worker> findAll() throws ServiceException {
+        try {
+            WorkerDao dao = transaction.createDao(WorkerDao.class);
+            List<Worker> workers = dao.read();
+            buildWorker(workers);
+            return workers;
+        } catch (DaoException | PersistentException e) {
+            throw new ServiceException(e);
         }
     }
 
     @Override
     public void delete(Integer id) throws ServiceException {
         try {
-            transaction.initTransaction(workerDao);
-            workerDao.delete(id);
-        } catch (DaoException e) {
+            WorkerDao dao = transaction.createDao(WorkerDao.class);
+            dao.delete(id);
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public void delete(Worker entity) throws ServiceException {
+    public List<Worker> findBySpecialization(String specialization) throws ServiceException {
         try {
-            transaction.initTransaction(workerDao);
-            workerDao.delete(entity);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public List<Worker> readByStartDate(Date date) throws ServiceException {
-        try {
-            transaction.initTransaction(workerDao, userInfoDao);
-            List<Worker> workers = workerDao.readByStartDate(date);
-            int userInfoId;
-            UserInfo userInfo;
-            for (Worker worker : workers) {
-                userInfoId = worker.getUserInfoId().getId();
-                userInfo = userInfoDao.read(userInfoId);
-                worker.setUserInfoId(userInfo);
-            }
-            transaction.commit();
+            WorkerDao dao = transaction.createDao(WorkerDao.class);
+            List<Worker> workers = dao.readBySpecialization(specialization);
+            buildWorker(workers);
             return workers;
-        } catch (DaoException e) {
-            transaction.rollback();
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.endTransaction();
-        }
-    }
-
-    @Override
-    public List<Worker> readByEndDate(Date date) throws ServiceException {
-        try {
-            transaction.initTransaction(workerDao, userInfoDao);
-            List<Worker> workers = workerDao.readByEndDate(date);
-            int userInfoId;
-            UserInfo userInfo;
-            for (Worker worker : workers) {
-                userInfoId = worker.getUserInfoId().getId();
-                userInfo = userInfoDao.read(userInfoId);
-                worker.setUserInfoId(userInfo);
-            }
-            transaction.commit();
-            return workers;
-        } catch (DaoException e) {
-            transaction.rollback();
-            throw new ServiceException(e);
-        } finally {
-            transaction.endTransaction();
-        }
-    }
-
-    @Override
-    public List<Worker> readBySpecialization(String specialization) throws ServiceException {
-        try {
-            transaction.initTransaction(workerDao, userInfoDao);
-            List<Worker> workers = workerDao.readBySpecialization(specialization);
-            int userInfoId;
-            UserInfo userInfo;
-            for (Worker worker : workers) {
-                userInfoId = worker.getUserInfoId().getId();
-                userInfo = userInfoDao.read(userInfoId);
-                worker.setUserInfoId(userInfo);
-            }
-            transaction.commit();
-            return workers;
-        } catch (DaoException e) {
-            transaction.rollback();
-            throw new ServiceException(e);
-        } finally {
-            transaction.endTransaction();
         }
     }
 
     @Override
     public void deleteBySpecialization(String specialization) throws ServiceException {
         try {
-            transaction.initTransaction(workerDao);
-            workerDao.deleteBySpecialization(specialization);
-        } catch (DaoException e) {
+            WorkerDao dao = transaction.createDao(WorkerDao.class);
+            dao.deleteBySpecialization(specialization);
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
+        }
+    }
+
+    private void buildWorker(List<Worker> workers) throws ServiceException {
+        try {
+            UserInfoDao userInfoDao = transaction.createDao(UserInfoDao.class);
+            UserDao userDao = transaction.createDao(UserDao.class);
+            Map<Integer, UserInfo> userInfos = new HashMap<>();
+            Map<Integer, User> users = new HashMap<>();
+            UserInfo userInfo;
+            User user;
+            Integer id;
+            for (Worker worker : workers) {
+                userInfo = worker.getUserInfoId();
+                if (userInfo.getId() != null) {
+                    id = userInfo.getId();
+                    userInfo = userInfos.get(id);
+                    if (userInfo == null) {
+                        userInfo = userInfoDao.read(id);
+                    }
+                    user = userInfo.getUserId();
+                    if (user.getId() != null) {
+                        id = user.getId();
+                        user = users.get(id);
+                        if (user == null) {
+                            user = userDao.read(id);
+                        }
+                        userInfo.setUserId(user);
+                    }
+                    worker.setUserInfoId(userInfo);
+                }
+            }
+        } catch (DaoException | PersistentException e) {
+            throw new ServiceException(e);
         }
     }
 }

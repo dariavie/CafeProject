@@ -1,5 +1,6 @@
 package by.training.cafeproject.domain;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Food extends Entity {
@@ -8,6 +9,7 @@ public class Food extends Entity {
     private Double price;
     private FoodType type;
     private String recipe;
+    private List<Ingredient> ingredients;
 
     public Food() {}
 
@@ -25,16 +27,6 @@ public class Food extends Entity {
         this.recipe = recipe;
     }
 
-    public Food(Integer id, String title, String description,
-                Double price, Integer typeNumber, String recipe) {
-        this.setId(id);
-        this.title = title;
-        this.description = description;
-        this.price = price;
-        this.setType(typeNumber);
-        this.recipe = recipe;
-    }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -47,20 +39,16 @@ public class Food extends Entity {
         this.price = price;
     }
 
-    public void setType(int typeNubmer) {
-        if (typeNubmer==1) {
-            this.type = FoodType.DISH;
-        } else if (typeNubmer==2) {
-            this.type = FoodType.DRINK;
-        }
-    }
-
     public void setType(FoodType type) {
         this.type = type;
     }
 
     public void setRecipe(String recipe) {
         this.recipe = recipe;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public String getTitle() {
@@ -83,13 +71,8 @@ public class Food extends Entity {
         return recipe;
     }
 
-    public int getTypeNumber() {
-        if (type.equals(FoodType.DISH)) {
-            return 1;
-        } else if (type.equals(FoodType.DRINK)) {
-            return 2;
-        }
-        return 0;
+    public List<Ingredient> getIngredients() {
+        return ingredients;
     }
 
     @Override

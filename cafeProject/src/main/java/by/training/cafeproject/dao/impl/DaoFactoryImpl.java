@@ -10,7 +10,6 @@ public class DaoFactoryImpl implements DaoFactory {
     private final FoodIngredientDaoImpl foodIngredientDao = new FoodIngredientDaoImpl();
     private final IngredientDaoImpl ingredientDao = new IngredientDaoImpl();
     private final OrderDaoImpl orderDao = new OrderDaoImpl();
-    private final RatingDaoImpl ratingDao = new RatingDaoImpl();
     private final UserDaoImpl userDao = new UserDaoImpl();
     private final UserInfoDaoImpl userInfoDao = new UserInfoDaoImpl();
     private final WorkerDaoImpl workerDao = new WorkerDaoImpl();
@@ -39,11 +38,6 @@ public class DaoFactoryImpl implements DaoFactory {
     @Override
     public OrderDaoImpl getOrderDao() {
         return orderDao;
-    }
-
-    @Override
-    public RatingDaoImpl getRatingDao() {
-        return ratingDao;
     }
 
     @Override

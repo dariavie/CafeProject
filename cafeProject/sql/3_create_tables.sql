@@ -82,51 +82,36 @@ CREATE TABLE foods_ingredients (
 
 CREATE TABLE orders (
     id INTEGER NOT NULL AUTO_INCREMENT,
-    worker_id INTEGER NOT NULL,
-    client_id INTEGER NULL,
-    client_name VARCHAR(50) NOT NULL,
-    food_id INTEGER NOT NULL,
+    client_id INTEGER NOT NULL,
+    price DOUBLE not null,
+    /*
+    1 - in progress
+    2 - done
+    */
+    status TINYINT NOT NULL CHECK (role in (1,2))
     CONSTRAINT orders_pk
     PRIMARY KEY (id),
-    CONSTRAINT orders_worker_fk
-    FOREIGN KEY (worker_id)
-    REFERENCES workers (id)
-    ON UPDATE CASCADE
-	ON DELETE RESTRICT,
 	CONSTRAINT orders_client_fk
 	FOREIGN KEY (client_id)
     REFERENCES user_info (id)
     ON UPDATE CASCADE
-	ON DELETE RESTRICT,
-	CONSTRAINT orders_foods_ingredients_fk
-	FOREIGN KEY (food_id)
-    REFERENCES foods_ingredients (food_id)
-    ON UPDATE CASCADE
 	ON DELETE RESTRICT
 );
 
-CREATE TABLE ratings (
-    id INTEGER NOT NULL AUTO_INCREMENT,
-    client_id INTEGER NULL,
-    client_name VARCHAR(50) NOT NULL,
-    food_id INTEGER NOT NULL,
-    CONSTRAINT ratings_pk
-    PRIMARY KEY (id),
-    CONSTRAINT ratings_client_id_fk
-	FOREIGN KEY (client_id)
-    REFERENCES orders (client_id)
-    ON UPDATE CASCADE
-	ON DELETE RESTRICT,
-	CONSTRAINT ratings_client_name_fk
-	FOREIGN KEY (client_name)
-    REFERENCES orders (client_name)
-    ON UPDATE CASCADE
-	ON DELETE RESTRICT,
-	CONSTRAINT ratings_foods_ingredients_fk
-	FOREIGN KEY (food_id)
-    REFERENCES orders (food_id)
-    ON UPDATE CASCADE
-	ON DELETE RESTRICT
-)
-
-
+CREATE TABLE orders_foods (
+    id INTEGER not null auto_increment
+    order_id integer not null,
+    food_id integer not null,
+    constraint orders_foods_pk
+    primary key (id),
+    constraint orders_foods_order_fk
+    foreign key (order_id)
+    references orders (id)
+    on update cascade
+    on delete restrict,
+    constraint orders_foods_food_fk
+    foreign key (food_id)
+    references foods (id)
+    on update cascade
+    on delete restrict
+);

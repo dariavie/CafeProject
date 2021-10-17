@@ -1,5 +1,6 @@
 package by.training.cafeproject.service.impl;
 
+import by.training.cafeproject.dao.FoodDao;
 import by.training.cafeproject.dao.IngredientDao;
 import by.training.cafeproject.dao.Transaction;
 import by.training.cafeproject.dao.TransactionFactory;
@@ -8,110 +9,74 @@ import by.training.cafeproject.dao.impl.DaoFactoryImpl;
 import by.training.cafeproject.dao.impl.IngredientDaoImpl;
 import by.training.cafeproject.dao.impl.TransactionFactoryImpl;
 import by.training.cafeproject.domain.Ingredient;
+import by.training.cafeproject.exception.PersistentException;
 import by.training.cafeproject.service.IngredientService;
 import by.training.cafeproject.service.exception.ServiceException;
 
 import java.util.List;
 
-public class IngredientServiceImpl implements IngredientService {
-    private DaoFactoryImpl daoFactoryObject = DaoFactoryImpl.getInstance();
-    private IngredientDaoImpl ingredientDao = daoFactoryObject.getIngredientDao();
-    private TransactionFactory transactionFactoryObject = TransactionFactoryImpl.getInstance();
-    private Transaction transaction = transactionFactoryObject.getTransaction();
-
+public class IngredientServiceImpl extends ServiceImpl implements IngredientService {
     @Override
-    public List<Ingredient> readByTitle(String search) throws ServiceException {
+    public void save(Ingredient ingredient) throws ServiceException {
         try {
-            transaction.initTransaction(ingredientDao);
-            return ingredientDao.readByTitle(search);
-        } catch (DaoException e) {
+            IngredientDao dao = transaction.createDao(IngredientDao.class);
+            if (ingredient.getId() != null) {
+                dao.update(ingredient);
+            } else {
+                ingredient.setId(dao.create(ingredient));
+            }
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public void deleteByTitle(String title) throws ServiceException {
+    public Ingredient findById(Integer id) throws ServiceException {
         try {
-            transaction.initTransaction(ingredientDao);
-            ingredientDao.deleteByTitle(title);
-        } catch (DaoException e) {
+            IngredientDao dao = transaction.createDao(IngredientDao.class);
+            return dao.read(id);
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public void create(Ingredient entity) throws ServiceException {
+    public Ingredient findByTitle(String title) throws ServiceException {
         try {
-            transaction.initTransaction(ingredientDao);
-            ingredientDao.create(entity);
-        } catch (DaoException e) {
+            IngredientDao dao = transaction.createDao(IngredientDao.class);
+            return dao.readByTitle(title);
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public Ingredient read(Integer id) throws ServiceException {
+    public List<Ingredient> findAll() throws ServiceException {
         try {
-            transaction.initTransaction(ingredientDao);
-            return ingredientDao.read(id);
-        } catch (DaoException e) {
+            IngredientDao dao = transaction.createDao(IngredientDao.class);
+            return dao.read();
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public void update(Ingredient entity) throws ServiceException {
-        try {
-            transaction.initTransaction(ingredientDao);
-            ingredientDao.update(entity);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public List<Ingredient> read() throws ServiceException {
-        try {
-            transaction.initTransaction(ingredientDao);
-            return ingredientDao.read();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
     public void delete(Integer id) throws ServiceException {
         try {
-            transaction.initTransaction(ingredientDao);
-            ingredientDao.delete(id);
-        } catch (DaoException e) {
+            IngredientDao dao = transaction.createDao(IngredientDao.class);
+            dao.delete(id);
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public void delete(Ingredient entity) throws ServiceException {
+    public void deleteByTitle(String title) throws ServiceException {
         try {
-            transaction.initTransaction(ingredientDao);
-            ingredientDao.delete(entity);
-        } catch (DaoException e) {
+            IngredientDao dao = transaction.createDao(IngredientDao.class);
+            dao.deleteByTitle(title);
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 }

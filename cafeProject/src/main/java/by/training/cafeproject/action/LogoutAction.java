@@ -1,12 +1,20 @@
 package by.training.cafeproject.action;
 
-import javax.servlet.http.HttpServletRequest;
+import by.training.cafeproject.domain.User;
+import by.training.cafeproject.service.exception.ServiceException;
+import org.apache.log4j.Logger;
 
-public class LogoutAction implements ActionManager {
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class LogoutAction extends AuthorizedUserAction {
+    private static Logger logger = Logger.getLogger(LogoutAction.class);
+
     @Override
-    public String execute(HttpServletRequest request) {
-        String page = ConfigurationManager.getProperty("path.page.index");
-        request.getSession().invalidate();
-        return page;
+    public Action.Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+        User user = getAuthorizedUser();
+        logger.info(String.format("user \"%s\" is logged out", user.getLogin()));
+        request.getSession(false).invalidate();
+        return new Forward("/login.html");
     }
 }

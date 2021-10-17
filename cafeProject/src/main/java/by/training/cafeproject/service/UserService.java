@@ -1,12 +1,22 @@
 package by.training.cafeproject.service;
 
 import by.training.cafeproject.domain.User;
+import by.training.cafeproject.exception.PersistentException;
 import by.training.cafeproject.service.exception.ServiceException;
 
-public interface UserService extends Service<User> {
-    User read(String login, String password) throws ServiceException;
+import java.util.List;
 
-    User readByLogin(String login) throws ServiceException;
+public interface UserService extends Service {
 
-    void delete(String login, String password) throws ServiceException;
+    List<User> findAll() throws ServiceException;
+
+    User findByIdentity(Integer identity) throws ServiceException;
+
+    User findByLoginAndPassword(String login, String password) throws ServiceException;
+
+    User findByLogin(String login) throws ServiceException;
+
+    void save(User user) throws ServiceException;
+
+    void delete(Integer identity) throws ServiceException;
 }

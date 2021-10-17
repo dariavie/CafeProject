@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface Dao<Type extends Entity> {
 
-    void create(Type entity) throws DaoException;
+    Integer create(Type entity) throws DaoException;
 
     Type read(Integer id) throws DaoException;
 
@@ -16,7 +16,5 @@ public interface Dao<Type extends Entity> {
     List<Type> read() throws DaoException;
 
     void delete(Integer id) throws DaoException;
-
-    void delete(Type entity) throws DaoException;
 }
 

@@ -5,8 +5,16 @@ import by.training.cafeproject.service.exception.ServiceException;
 
 import java.util.List;
 
-public interface IngredientService extends Service<Ingredient> {
-    List<Ingredient> readByTitle(String search) throws ServiceException;
+public interface IngredientService extends Service {
+    void save(Ingredient ingredient) throws ServiceException;
+
+    Ingredient findById(Integer id) throws ServiceException;
+
+    Ingredient findByTitle(String title) throws ServiceException;
+
+    List<Ingredient> findAll() throws ServiceException;
+
+    void delete(Integer id) throws ServiceException;
 
     void deleteByTitle(String title) throws ServiceException;
 }

@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/cafeProject_war_exploded">
-    <Resorce
-        name="jdbc/cafe_db"
-        author="Container"
-        type="javax.sql.DataSource"
-        maxActive="32"
-        maxIdle="8"
-        maxWait="10000"
-        username="root"
-        password="1skinnydoublespace2$"
-        driverClassName="com.mysql.cj.jdbc.Driver"
-        url="jdbc:mysql://localhost:3306/cafe_db"
-        />
-</Context>
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<Context antiJARLocking="true" path="/cafeProject_war_exploded">-->
+<!--    <Resorce-->
+<!--        name="jdbc/cafe_db"-->
+<!--        author="Container"-->
+<!--        type="javax.sql.DataSource"-->
+<!--        maxActive="32"-->
+<!--        maxIdle="8"-->
+<!--        maxWait="10000"-->
+<!--        username="root"-->
+<!--        password="1skinnydoublespace2$"-->
+<!--        driverClassName="com.mysql.cj.jdbc.Driver"-->
+<!--        url="jdbc:mysql://localhost:3306/cafe_db"-->
+<!--        />-->
+<!--</Context>-->

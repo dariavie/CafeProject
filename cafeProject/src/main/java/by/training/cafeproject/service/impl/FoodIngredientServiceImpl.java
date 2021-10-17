@@ -6,182 +6,141 @@ import by.training.cafeproject.dao.impl.*;
 import by.training.cafeproject.domain.Food;
 import by.training.cafeproject.domain.FoodIngredient;
 import by.training.cafeproject.domain.Ingredient;
+import by.training.cafeproject.exception.PersistentException;
 import by.training.cafeproject.service.FoodIngredientService;
 import by.training.cafeproject.service.exception.ServiceException;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class FoodIngredientServiceImpl implements FoodIngredientService {
-    private DaoFactoryImpl daoFactoryObject = DaoFactoryImpl.getInstance();
-    private FoodIngredientDaoImpl foodIngredientDao = daoFactoryObject.getFoodIngredientDao();
-    private FoodDaoImpl foodDao = daoFactoryObject.getFoodDao();
-    private IngredientDaoImpl ingredientDao = daoFactoryObject.getIngredientDao();
-    private TransactionFactory transactionFactoryObject = TransactionFactoryImpl.getInstance();
-    private Transaction transaction = transactionFactoryObject.getTransaction();
-
+public class FoodIngredientServiceImpl extends ServiceImpl implements FoodIngredientService {
     @Override
-    public List<FoodIngredient> readByFoodId(Integer foodId) throws ServiceException {
+    public FoodIngredient findById(Integer id) throws ServiceException {
         try {
-            transaction.initTransaction(foodDao, ingredientDao, foodIngredientDao);
-            Food food = foodDao.read(foodId);
-            List<FoodIngredient> foodsIngredients = foodIngredientDao.readByFoodId(foodId);
-            int ingredientId;
-            Ingredient ingredient;
-            for (FoodIngredient foodIngredient : foodsIngredients) {
-                foodIngredient.setFoodId(food);
-                ingredientId = foodIngredient.getIngredientId().getId();
-                ingredient = ingredientDao.read(ingredientId);
-                foodIngredient.setIngredientId(ingredient);
+            FoodIngredientDao dao = transaction.createDao(FoodIngredientDao.class);
+            FoodIngredient foodIngredient = dao.read(id);
+            if (foodIngredient != null) {
+                buildFoodIngredient(Arrays.asList(foodIngredient));
             }
-            transaction.commit();
-            return foodsIngredients;
-        } catch (DaoException e) {
-            transaction.rollback();
-            throw new ServiceException(e);
-        } finally {
-            transaction.endTransaction();
-        }
-    }
-
-    @Override
-    public List<FoodIngredient> readByIngredientId(Integer ingredientId) throws ServiceException {
-        try {
-            transaction.initTransaction(foodDao, ingredientDao, foodIngredientDao);
-            Ingredient ingredient = ingredientDao.read(ingredientId);
-            List<FoodIngredient> foodsIngredients = foodIngredientDao.readByIngredientId(ingredientId);
-            int foodId;
-            Food food;
-            for (FoodIngredient foodIngredient : foodsIngredients) {
-                foodIngredient.setIngredientId(ingredient);
-                foodId = foodIngredient.getFoodId().getId();
-                food = foodDao.read(foodId);
-                foodIngredient.setFoodId(food);
-            }
-            transaction.commit();
-            return foodsIngredients;
-        } catch (DaoException e) {
-            transaction.rollback();
-            throw new ServiceException(e);
-        } finally {
-            transaction.endTransaction();
-        }
-    }
-
-    @Override
-    public void deleteByFoodId(Integer foodId) throws ServiceException {
-        try {
-            transaction.initTransaction(foodIngredientDao);
-            foodIngredientDao.deleteByFoodId(foodId);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public void deleteByIngredientId(Integer ingredientId) throws ServiceException {
-        try {
-            transaction.initTransaction(foodIngredientDao);
-            foodIngredientDao.deleteByIngredientId(ingredientId);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public void create(FoodIngredient entity) throws ServiceException {
-        try {
-            transaction.initTransaction(foodIngredientDao);
-            foodIngredientDao.create(entity);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public FoodIngredient read(Integer id) throws ServiceException {
-        try {
-            transaction.initTransaction(foodDao, ingredientDao, foodIngredientDao);
-            FoodIngredient foodIngredient = foodIngredientDao.read(id);
-            Food food = foodDao.read(foodIngredient.getFoodId().getId());
-            Ingredient ingredient = ingredientDao.read(foodIngredient.getIngredientId().getId());
-            foodIngredient.setFoodId(food);
-            foodIngredient.setIngredientId(ingredient);
-            transaction.commit();
             return foodIngredient;
-        } catch (DaoException e) {
-            transaction.rollback();
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.endTransaction();
         }
     }
 
     @Override
-    public void update(FoodIngredient entity) throws ServiceException {
+    public List<FoodIngredient> findALl() throws ServiceException {
         try {
-            transaction.initTransaction(foodIngredientDao);
-            foodIngredientDao.update(entity);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public List<FoodIngredient> read() throws ServiceException {
-        try {
-            transaction.initTransaction(foodDao, ingredientDao, foodIngredientDao);
-            List<FoodIngredient> foodsIngredients = foodIngredientDao.read();
-            int foodId;
-            int ingredientId;
-            Food food;
-            Ingredient ingredient;
-            for (FoodIngredient foodIngredient : foodsIngredients) {
-                foodId = foodIngredient.getFoodId().getId();
-                ingredientId = foodIngredient.getIngredientId().getId();
-                food = foodDao.read(foodId);
-                ingredient = ingredientDao.read(ingredientId);
-                foodIngredient.setFoodId(food);
-                foodIngredient.setIngredientId(ingredient);
-            }
-            transaction.commit();
+            FoodIngredientDao dao = transaction.createDao(FoodIngredientDao.class);
+            List<FoodIngredient> foodsIngredients = dao.read();
+            buildFoodIngredient(foodsIngredients);
             return foodsIngredients;
-        } catch (DaoException e) {
-            transaction.rollback();
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.endTransaction();
         }
     }
 
     @Override
     public void delete(Integer id) throws ServiceException {
         try {
-            transaction.initTransaction(foodIngredientDao);
-            foodIngredientDao.delete(id);
-        } catch (DaoException e) {
+            FoodIngredientDao dao = transaction.createDao(FoodIngredientDao.class);
+            dao.delete(id);
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public void delete(FoodIngredient entity) throws ServiceException {
+    public void deleteByFoodId(Integer foodId) throws ServiceException {
         try {
-            transaction.initTransaction(foodIngredientDao);
-            foodIngredientDao.delete(entity);
-        } catch (DaoException e) {
+            FoodIngredientDao dao = transaction.createDao(FoodIngredientDao.class);
+            dao.deleteByFoodId(foodId);
+        } catch (DaoException | PersistentException e) {
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
+        }
+    }
+
+    @Override
+    public void deleteByIngredientId(Integer ingredientId) throws ServiceException {
+        try {
+            FoodIngredientDao dao = transaction.createDao(FoodIngredientDao.class);
+            dao.deleteByIngredientId(ingredientId);
+        } catch (DaoException | PersistentException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<FoodIngredient> findByFoodId(Integer foodId) throws ServiceException {
+        try {
+            FoodIngredientDao dao = transaction.createDao(FoodIngredientDao.class);
+            List<FoodIngredient> foodsIngredients = dao.readByFoodId(foodId);
+            buildFoodIngredient(foodsIngredients);
+            return foodsIngredients;
+        } catch (DaoException | PersistentException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<FoodIngredient> findByIngredientId(Integer ingredientId) throws ServiceException {
+        try {
+            FoodIngredientDao dao = transaction.createDao(FoodIngredientDao.class);
+            List<FoodIngredient> foodsIngredients = dao.readByIngredientId(ingredientId);
+            buildFoodIngredient(foodsIngredients);
+            return foodsIngredients;
+        } catch (DaoException | PersistentException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void save(FoodIngredient foodIngredient) throws ServiceException {
+        try {
+            FoodIngredientDao dao = transaction.createDao(FoodIngredientDao.class);
+            if (foodIngredient.getId() != null) {
+                dao.update(foodIngredient);
+            } else {
+                foodIngredient.setId(dao.create(foodIngredient));
+            }
+        } catch (DaoException | PersistentException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    private void buildFoodIngredient(List<FoodIngredient> foodsIngredients) throws ServiceException {
+        try {
+            FoodDao foodDao = transaction.createDao(FoodDao.class);
+            IngredientDao ingredientDao = transaction.createDao(IngredientDao.class);
+            Map<Integer, Food> foods = new HashMap<>();
+            Map<Integer, Ingredient> ingredients = new HashMap<>();
+            Food food;
+            Ingredient ingredient;
+            Integer id;
+            for (FoodIngredient foodIngredient : foodsIngredients) {
+                food = foodIngredient.getFoodId();
+                if (food != null) {
+                    id = food.getId();
+                    food = foods.get(id);
+                    if (food == null) {
+                        food = foodDao.read(id);
+                    }
+                    foodIngredient.setFoodId(food);
+                }
+                ingredient = foodIngredient.getIngredientId();
+                if (ingredient != null) {
+                    id = ingredient.getId();
+                    ingredient = ingredients.get(id);
+                    if (ingredient == null) {
+                        ingredient = ingredientDao.read(id);
+                    }
+                    foodIngredient.setIngredientId(ingredient);
+                }
+            }
+        } catch (DaoException | PersistentException e) {
+            throw new ServiceException(e);
         }
     }
 }

@@ -21,14 +21,8 @@ public class User extends Entity {
         this.password = password;
     }
 
-    public void setRole(int role) {
-        if (role==0) {
-            this.role = Role.ADMINISTRATOR;
-        } else if (role==1) {
-            this.role = Role.WORKER;
-        } else if (role==2) {
-            this.role = Role.CLIENT;
-        }
+    public void setRole(Role role) {
+       this.role = role;
     }
 
     public String getLogin() {
@@ -43,40 +37,13 @@ public class User extends Entity {
         return role;
     }
 
-    public int getRoleNumber() {
-        int number = -1;
-        if (role.equals(Role.ADMINISTRATOR)) {
-            number = 0;
-        } else if (role.equals(Role.WORKER)) {
-            number = 1;
-        } else if (role.equals(Role.CLIENT)) {
-            number = 2;
-        }
-        return number;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        User user = (User) o;
-        return Objects.equals(login, user.login) && Objects.equals(password, user.password) && role == user.role;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), login, password, role);
-    }
-
     @Override
     public String toString() {
         return "User{" +
-                "id='" + getId() + '\'' +
-                ", login='" + login + '\'' +
+                "login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
-                '}';
+                "} " + super.toString();
     }
 }
 

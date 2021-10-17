@@ -1,0 +1,72 @@
+
+2021-10-01 00:19:07,121
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-01 00:19:08,923
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-01 00:20:20,590
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-01 00:20:22,186
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-04 15:09:26,595
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-04 15:09:28,509
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-04 15:26:41,076
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-04 15:26:42,671
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-04 15:31:38,364
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-04 15:31:40,148
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-04 15:33:37,445
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-04 15:33:39,057
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-04 15:33:39,191
+INFO	by.training.cafeproject.service.impl.WorkerServiceImpl.findById:40
+worker1: Worker{userInfoId=UserInfo{userId=User{login='null', password='null', role=null} Entity{id=2}, surname='null', name='null', phone='null', email='null'} Entity{id=2}, startOfWork=2019-01-05, endOfWork=2020-01-02, specialization='drinks, till'} Person{name='null', surname='null', phone='null', email='null'}
+
+2021-10-04 15:33:39,194
+INFO	by.training.cafeproject.service.impl.WorkerServiceImpl.findById:44
+worker2: Worker{userInfoId=UserInfo{userId=User{login='null', password='null', role=null} Entity{id=2}, surname='Vukina', name='Alina', phone='+375295443434', email='alina_vukina@gmail.com'} Entity{id=2}, startOfWork=2019-01-05, endOfWork=2020-01-02, specialization='drinks, till'} Person{name='null', surname='null', phone='null', email='null'}
+
+2021-10-04 15:38:15,710
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-04 15:38:17,394
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-04 15:38:17,517
+INFO	by.training.cafeproject.service.impl.WorkerServiceImpl.findById:40
+worker1: Worker{userInfoId=UserInfo{userId=User{login='null', password='null', role=null} Entity{id=2}, surname='null', name='null', phone='null', email='null'} Entity{id=2}, startOfWork=2019-01-05, endOfWork=2020-01-02, specialization='drinks, till'} Person{name='null', surname='null', phone='null', email='null'}
+
+2021-10-04 15:38:17,530
+INFO	by.training.cafeproject.service.impl.WorkerServiceImpl.findById:44
+worker2: Worker{userInfoId=UserInfo{userId=User{login='manager_1', password='948596tjkjg', role=WORKER} Entity{id=2}, surname='Vukina', name='Alina', phone='+375295443434', email='alina_vukina@gmail.com'} Entity{id=2}, startOfWork=2019-01-05, endOfWork=2020-01-02, specialization='drinks, till'} Person{name='null', surname='null', phone='null', email='null'}

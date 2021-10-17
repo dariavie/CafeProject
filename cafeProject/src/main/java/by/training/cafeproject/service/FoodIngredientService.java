@@ -5,12 +5,20 @@ import by.training.cafeproject.service.exception.ServiceException;
 
 import java.util.List;
 
-public interface FoodIngredientService extends Service<FoodIngredient> {
-    List<FoodIngredient> readByFoodId(Integer foodId) throws ServiceException;
+public interface FoodIngredientService extends Service {
+    FoodIngredient findById(Integer id) throws ServiceException;
 
-    List<FoodIngredient> readByIngredientId(Integer ingredientId) throws ServiceException;
+    List<FoodIngredient> findALl() throws ServiceException;
+
+    void delete(Integer id) throws ServiceException;
 
     void deleteByFoodId(Integer foodId) throws ServiceException;
 
     void deleteByIngredientId(Integer ingredientId) throws ServiceException;
+
+    List<FoodIngredient> findByFoodId(Integer foodId) throws ServiceException;
+
+    List<FoodIngredient> findByIngredientId(Integer ingredientId) throws ServiceException;
+
+    void save(FoodIngredient foodIngredient) throws ServiceException;
 }

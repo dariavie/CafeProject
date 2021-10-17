@@ -17,7 +17,6 @@ public class Worker extends Person {
 
     public void setUserInfoId(UserInfo userInfoId) {
         this.userInfoId = userInfoId;
-        setId(userInfoId.getId());
     }
 
     public void setStartOfWork(Date startOfWork) {

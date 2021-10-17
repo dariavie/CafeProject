@@ -7,9 +7,6 @@ import java.sql.Date;
 import java.util.List;
 
 public interface WorkerDao extends Dao<Worker> {
-    List<Worker> readByStartDate(Date date) throws DaoException;
-
-    List<Worker> readByEndDate(Date date) throws DaoException;
 
     List<Worker> readBySpecialization(String specialization) throws DaoException;
 

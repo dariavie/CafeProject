@@ -26,7 +26,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a">
-        <schema name="cafe_db" object-types="table, column" />
+        <schema name="cafe_db" object-types="table, function, column" />
       </connection>
     </loaded-nodes>
   </component>

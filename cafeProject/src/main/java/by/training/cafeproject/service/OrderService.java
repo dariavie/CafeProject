@@ -5,16 +5,16 @@ import by.training.cafeproject.service.exception.ServiceException;
 
 import java.util.List;
 
-public interface OrderService extends Service<Order> {
-    List<Order> readByClientId(Integer clientId) throws ServiceException;
+public interface OrderService extends Service {
+    void save(Order order) throws ServiceException;
 
-    List<Order> readByClientName(String name) throws ServiceException;
+    Order findById(Integer id) throws ServiceException;
 
-    List<Order> readByFoodId(Integer foodId) throws ServiceException;
+    List<Order> findByClientId(Integer clientId) throws ServiceException;
 
-    List<Order> readByWorkerId(Integer workerId) throws ServiceException;
+    List<Order> findAll() throws ServiceException;
+
+    void delete(Integer id) throws ServiceException;
 
     void deleteByClientId(Integer clientId) throws ServiceException;
-
-    void deleteByWorkerId(Integer workerId) throws ServiceException;
 }
