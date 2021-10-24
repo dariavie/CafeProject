@@ -2,7 +2,6 @@ package by.training.cafeproject.service.impl;
 
 import by.training.cafeproject.dao.Transaction;
 import by.training.cafeproject.dao.TransactionFactory;
-import by.training.cafeproject.dao.impl.ServiceInvocationHandlerImpl;
 import by.training.cafeproject.exception.PersistentException;
 import by.training.cafeproject.service.*;
 import by.training.cafeproject.service.exception.ServiceException;

@@ -1,7 +1,6 @@
-package by.training.cafeproject.dao.impl;
+package by.training.cafeproject.service.impl;
 
 import by.training.cafeproject.exception.PersistentException;
-import by.training.cafeproject.service.impl.ServiceImpl;
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.InvocationHandler;

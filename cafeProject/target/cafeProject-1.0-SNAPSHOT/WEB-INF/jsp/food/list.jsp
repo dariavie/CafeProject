@@ -17,19 +17,8 @@
             <th>Ингредиенты</th>
         </TR>
         <c:url value="/food/edit.html" var="foodEditUrl"/>
-<%--        <c:url value="/client/delete.html" var="clientDeleteUrl"/>--%>
         <c:forEach items="${foods}" var="food">
-            <%--            <c:choose>--%>
-            <%--                <c:when test="${not empty client.overdueUsages}">--%>
-            <%--                    <c:set var="classname" value="special"/>--%>
-            <%--                </c:when>--%>
-            <%--                <c:otherwise>--%>
-            <%--                    <c:remove var="classname"/>--%>
-            <%--                </c:otherwise>--%>
-            <%--            </c:choose>--%>
-            <TR onclick="submitFormById('form-${food.id}')" class="${classname}">
-
-                    <%--                        ${reader.libraryCardNumber}--%>
+            <TR>
                 <FORM id="form-${food.id}" action="${foodEditUrl}" method="post">
                     <INPUT type="hidden" name="id" value="${food.id}">
                 </FORM>

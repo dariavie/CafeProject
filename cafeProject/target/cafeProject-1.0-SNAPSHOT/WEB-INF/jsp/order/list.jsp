@@ -14,19 +14,8 @@
             <TH>Статус</TH>
         </TR>
         <c:url value="/order/edit.html" var="orderEditUrl"/>
-            <%--        <c:url value="/client/delete.html" var="clientDeleteUrl"/>--%>
         <c:forEach items="${orders}" var="order">
-            <%--            <c:choose>--%>
-            <%--                <c:when test="${not empty client.overdueUsages}">--%>
-            <%--                    <c:set var="classname" value="special"/>--%>
-            <%--                </c:when>--%>
-            <%--                <c:otherwise>--%>
-            <%--                    <c:remove var="classname"/>--%>
-            <%--                </c:otherwise>--%>
-            <%--            </c:choose>--%>
-            <TR onclick="submitFormById('form-${order.id}')" class="${classname}">
-
-                    <%--                        ${reader.libraryCardNumber}--%>
+            <TR>
                 <FORM id="form-${order.id}" action="${orderEditUrl}" method="post">
                     <INPUT type="hidden" name="id" value="${order.id}">
                 </FORM>

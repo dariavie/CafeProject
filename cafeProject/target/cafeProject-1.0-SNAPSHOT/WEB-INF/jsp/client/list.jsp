@@ -18,17 +18,6 @@
         <c:url value="/client/edit.html" var="clientEditUrl"/>
         <c:url value="/client/delete.html" var="clientDeleteUrl"/>
         <c:forEach items="${clients}" var="client">
-<%--            <c:choose>--%>
-<%--                <c:when test="${not empty client.overdueUsages}">--%>
-<%--                    <c:set var="classname" value="special"/>--%>
-<%--                </c:when>--%>
-<%--                <c:otherwise>--%>
-<%--                    <c:remove var="classname"/>--%>
-<%--                </c:otherwise>--%>
-<%--            </c:choose>--%>
-            <TR onclick="submitFormById('form-${client.id}')" class="${classname}">
-
-<%--                        ${reader.libraryCardNumber}--%>
                     <FORM id="form-${client.id}" action="${clientEditUrl}" method="post">
                         <INPUT type="hidden" name="id" value="${client.id}">
                     </FORM>

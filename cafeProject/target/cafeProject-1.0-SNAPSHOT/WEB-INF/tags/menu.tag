@@ -46,7 +46,7 @@
                 язык:<br/>
                 <c:url value="${redirectedData}" var="requestUrl"/>
                 <form action="${requestUrl}" method="post">
-                    <a href="${requestUrl}" style="color: papayawhip; text-align: right" id="ru">
+                    <a href="${requestUrl}" style="color: papayawhip; text-align: right">
                         <input type="hidden" name="locale" value="ru">
                         ru <br/>
                     </a>

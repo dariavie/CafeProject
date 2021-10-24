@@ -21,15 +21,7 @@
         <c:url value="/worker/edit.html" var="workerEditUrl"/>
         <c:url value="/worker/delete.html" var="workerDeleteUrl"/>
         <c:forEach items="${workers}" var="worker">
-            <%--            <c:choose>--%>
-            <%--                <c:when test="${not empty client.overdueUsages}">--%>
-            <%--                    <c:set var="classname" value="special"/>--%>
-            <%--                </c:when>--%>
-            <%--                <c:otherwise>--%>
-            <%--                    <c:remove var="classname"/>--%>
-            <%--                </c:otherwise>--%>
-            <%--            </c:choose>--%>
-            <TR onclick="submitFormById('form-${worker.id}')" class="${classname}">
+            <TR>
                     <FORM id="form-${worker.id}" action="${workerEditUrl}" method="post">
                         <INPUT type="hidden" name="id" value="${worker.id}">
                     </FORM>

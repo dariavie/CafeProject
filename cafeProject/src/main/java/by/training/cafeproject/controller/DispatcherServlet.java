@@ -74,7 +74,8 @@ public class DispatcherServlet extends HttpServlet {
                     session.removeAttribute("redirectedData");
                 }
             }
-
+            String loc = request.getParameter("locale");
+            logger.info("locale: " + loc);
             ActionManager actionManager = ActionManagerFactory.getManager(getFactory());
             Action.Forward forward = actionManager.execute(action, request, response);
             actionManager.close();

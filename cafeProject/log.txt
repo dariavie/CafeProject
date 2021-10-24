@@ -70,3 +70,551 @@ worker1: Worker{userInfoId=UserInfo{userId=User{login='null', password='null', r
 2021-10-04 15:38:17,530
 INFO	by.training.cafeproject.service.impl.WorkerServiceImpl.findById:44
 worker2: Worker{userInfoId=UserInfo{userId=User{login='manager_1', password='948596tjkjg', role=WORKER} Entity{id=2}, surname='Vukina', name='Alina', phone='+375295443434', email='alina_vukina@gmail.com'} Entity{id=2}, startOfWork=2019-01-05, endOfWork=2020-01-02, specialization='drinks, till'} Person{name='null', surname='null', phone='null', email='null'}
+
+2021-10-18 15:24:20,781
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-18 15:24:23,055
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-18 15:24:23,282
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-18 15:24:23,282
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-18 15:24:23,727
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-18 15:24:23,727
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-18 15:24:23,740
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-18 15:24:23,740
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-18 15:24:23,740
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-18 15:24:23,988
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-18 15:24:23,988
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-18 15:24:23,988
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-18 15:24:23,996
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-18 15:24:23,996
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-18 15:24:23,996
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-18 15:24:23,996
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-18 15:24:24,383
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-18 15:24:24,383
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-18 15:24:24,383
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-18 15:24:24,383
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-18 15:38:54,202
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-18 15:39:50,568
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-18 15:39:52,749
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-18 15:39:53,046
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-18 15:41:30,739
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-18 15:41:32,695
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-18 15:41:32,894
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-18 15:41:33,032
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-19 15:00:52,280
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-19 15:00:54,281
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-19 15:00:54,872
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-19 15:00:54,928
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-19 15:00:54,974
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-19 15:00:55,065
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-19 15:24:24,890
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-19 15:24:26,965
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-19 15:26:19,240
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-19 15:26:21,072
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-19 15:31:56,833
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-19 15:31:58,877
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-19 15:32:21,245
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-19 15:32:22,955
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-19 15:32:23,179
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-19 15:32:23,244
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-19 15:32:23,294
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-19 15:32:23,337
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-19 15:33:51,554
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-19 15:33:53,368
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-19 15:44:53,799
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-19 15:44:55,756
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-20 14:36:44,345
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-20 14:36:48,891
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-20 15:01:28,194
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-20 15:01:30,762
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-20 15:05:01,841
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-20 15:05:04,876
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-20 15:06:07,911
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-20 15:06:10,820
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-20 15:06:11,134
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:46
+start of find by id
+
+2021-10-20 15:06:11,145
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:49
+order if found
+
+2021-10-20 15:06:11,152
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-20 15:06:11,221
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:52
+order is built
+
+2021-10-20 15:06:11,236
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:46
+start of find by id
+
+2021-10-20 15:06:11,238
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:49
+order if found
+
+2021-10-20 15:06:11,242
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-20 15:06:11,259
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:52
+order is built
+
+2021-10-20 15:06:11,271
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:46
+start of find by id
+
+2021-10-20 15:06:11,274
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:49
+order if found
+
+2021-10-20 15:06:11,276
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-20 15:06:11,285
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:52
+order is built
+
+2021-10-20 16:30:33,704
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-20 16:30:36,188
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-20 16:30:36,481
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-20 16:30:36,515
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-20 16:30:36,563
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-21 16:24:21,357
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-21 16:25:53,561
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-21 16:25:55,524
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-21 16:25:55,793
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-21 16:25:55,839
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-21 16:25:55,863
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-21 16:35:00,259
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-21 16:35:02,659
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-21 16:35:03,092
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:46
+start of find by id
+
+2021-10-21 16:35:03,097
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:49
+order if found
+
+2021-10-21 16:35:03,098
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-21 16:35:03,151
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:46
+start of find by id
+
+2021-10-21 16:35:03,153
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:49
+order if found
+
+2021-10-21 16:35:03,154
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-21 16:35:03,209
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:46
+start of find by id
+
+2021-10-21 16:35:03,211
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:49
+order if found
+
+2021-10-21 16:35:03,212
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-21 16:35:03,251
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:46
+start of find by id
+
+2021-10-21 16:35:03,255
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:49
+order if found
+
+2021-10-21 16:35:03,257
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-22 12:35:51,812
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-22 12:35:54,324
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-22 12:38:25,837
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-22 12:38:28,198
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-22 12:38:28,530
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:46
+start of find by id
+
+2021-10-22 12:38:28,534
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:49
+order if found
+
+2021-10-22 12:38:28,536
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-22 12:38:28,574
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:46
+start of find by id
+
+2021-10-22 12:38:28,577
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:49
+order if found
+
+2021-10-22 12:38:28,578
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-22 12:38:28,624
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:46
+start of find by id
+
+2021-10-22 12:38:28,627
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:49
+order if found
+
+2021-10-22 12:38:28,629
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-22 12:38:28,663
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:46
+start of find by id
+
+2021-10-22 12:38:28,665
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:49
+order if found
+
+2021-10-22 12:38:28,666
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-22 12:40:18,022
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-22 12:40:21,319
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-22 12:43:31,285
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-22 12:43:33,072
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-22 12:43:33,322
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:46
+start of find by id
+
+2021-10-22 12:43:33,330
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:49
+order if found
+
+2021-10-22 12:43:33,333
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-22 12:43:33,393
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:46
+start of find by id
+
+2021-10-22 12:43:33,396
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:49
+order if found
+
+2021-10-22 12:43:33,397
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-22 12:43:33,447
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:46
+start of find by id
+
+2021-10-22 12:43:33,449
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:49
+order if found
+
+2021-10-22 12:43:33,450
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-22 12:43:33,534
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:46
+start of find by id
+
+2021-10-22 12:43:33,535
+INFO	by.training.cafeproject.service.impl.OrderServiceImpl.findById:49
+order if found
+
+2021-10-22 12:43:33,537
+INFO	by.training.cafeproject.dao.impl.OrderFoodDaoImpl.readByOrderId:126
+readByOrderId in dao start
+
+2021-10-22 12:58:23,582
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-22 12:58:25,856
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-22 12:58:54,145
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-22 12:58:56,243
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-22 13:02:53,351
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-22 13:02:58,111
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-22 13:03:39,520
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-22 13:03:41,321
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+
+2021-10-22 14:12:19,278
+INFO	by.training.cafeproject.dao.pool.ConnectionPool.init:80
+start of connection pool init
+
+2021-10-22 14:12:21,057
+DEBUG	by.training.cafeproject.dao.pool.ConnectionPool.getConnection:57
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection

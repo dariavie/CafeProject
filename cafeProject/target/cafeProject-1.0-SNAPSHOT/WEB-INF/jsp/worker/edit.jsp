@@ -61,46 +61,9 @@
     <LABEL for="specialization">Специализация:</LABEL>
     <INPUT type="text" id="specialization" name="specialization" value="${specialization}">
     <BUTTON type="submit">Сохранить</BUTTON>
-    <c:if test="${not empty worker}">
-        <%--      <c:if test="${not empty client.returnedUsages or not empty reader.currentUsages or not empty reader.overdueUsages}">--%>
-        <c:set var="disabled" value="disabled"/>
-        <%--      </c:if>--%>
-        <BUTTON type="button" onclick="submitFormById('form-delete')" ${disabled}>Удалить</BUTTON>
-    </c:if>
     <BUTTON type="reset">Сбросить</BUTTON>
     </FORM>
     <c:if test="${not empty worker}">
         <c:url value="/worker/delete.html" var="workerDeleteUrl"/>
-        <FORM action="${workerDeleteUrl}" method="post" id="form-delete" onsubmit="return confirmation(this, 'Вы уверены, что хотите удалить работника?')">
-            <INPUT type="hidden" name="id" value="${worker.id}">
-        </FORM>
-        <%--    <c:if test="${not empty client.overdueUsages}">--%>
-        <%--      <H2>Список невозвращённых вовремя книг</H2>--%>
-        <%--      <TABLE>--%>
-        <%--        <TR>--%>
-        <%--          <TH>Автор</TH>--%>
-        <%--          <TH>Название</TH>--%>
-        <%--          <TH>Дата выдачи</TH>--%>
-        <%--          <TH>Планируемая дата возврата</TH>--%>
-        <%--        </TR>--%>
-        <%--        <c:forEach items="${reader.overdueUsages}" var="usage">--%>
-        <%--          <TR>--%>
-        <%--            <TD>--%>
-        <%--              <c:choose>--%>
-        <%--                <c:when test="${not empty usage.book.author}">--%>
-        <%--                  <u:person value="${usage.book.author}"/>--%>
-        <%--                </c:when>--%>
-        <%--                <c:otherwise>--%>
-        <%--                  Без автора--%>
-        <%--                </c:otherwise>--%>
-        <%--              </c:choose>--%>
-        <%--            </TD>--%>
-        <%--            <TD>${usage.book.title}</TD>--%>
-        <%--            <TD><fmt:formatDate value="${usage.deliveryDate}" pattern="dd.MM.yyyy"/></TD>--%>
-        <%--            <TD><fmt:formatDate value="${usage.planReturnDate}" pattern="dd.MM.yyyy"/></TD>--%>
-        <%--          </TR>--%>
-        <%--        </c:forEach>--%>
-        <%--      </TABLE>--%>
-        <%--    </c:if>--%>
     </c:if>
 </u:html>

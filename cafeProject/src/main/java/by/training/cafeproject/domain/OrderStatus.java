@@ -17,7 +17,7 @@ public enum OrderStatus {
     }
 
     public Integer getId() {
-        return ordinal();
+        return ordinal()+1;
     }
 
     public static OrderStatus getById(Integer id) {

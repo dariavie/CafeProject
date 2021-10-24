@@ -53,7 +53,7 @@ CREATE TABLE foods (
 	title VARCHAR(50) NOT NULL UNIQUE,
 	description VARCHAR(500) NOT NULL,
 	price DOUBLE NOT NULL,
-	recipe VARCHAR(500) NOT NULL,
+	recipe VARCHAR(500) NULL,
 
 	/*
      * 1 - dish
@@ -65,9 +65,12 @@ CREATE TABLE foods (
 );
 
 CREATE TABLE foods_ingredients (
+	id INTEGER NOT NULL AUTO_INCREMENT,
     food_id INTEGER NOT NULL,
     ingredient_id INTEGER NOT NULL,
     ingredient_amount VARCHAR(50) NOT NULL,
+    CONSTRAINT foods_ingredients_pk
+    PRIMARY KEY (id),
     CONSTRAINT foods_ingredients_food_fk
     FOREIGN KEY (food_id)
     REFERENCES foods (id)
@@ -83,12 +86,12 @@ CREATE TABLE foods_ingredients (
 CREATE TABLE orders (
     id INTEGER NOT NULL AUTO_INCREMENT,
     client_id INTEGER NOT NULL,
-    price DOUBLE not null,
+    price DOUBLE null,
     /*
     1 - in progress
     2 - done
     */
-    status TINYINT NOT NULL CHECK (role in (1,2))
+    status TINYINT NULL CHECK (status in (1,2)),
     CONSTRAINT orders_pk
     PRIMARY KEY (id),
 	CONSTRAINT orders_client_fk
@@ -99,7 +102,7 @@ CREATE TABLE orders (
 );
 
 CREATE TABLE orders_foods (
-    id INTEGER not null auto_increment
+    id INTEGER not null auto_increment,
     order_id integer not null,
     food_id integer not null,
     constraint orders_foods_pk

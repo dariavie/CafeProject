@@ -26,7 +26,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a">
-        <schema name="cafe_db" object-types="table, function, column" />
+        <schema name="cafe_db" object-types="table" />
       </connection>
     </loaded-nodes>
   </component>
@@ -34,12 +34,16 @@
     <connection id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a">
       <console name="Connection" type="STANDARD" schema="cafe_db" session="Main" />
     </connection>
+    <connection id="4acbf5c7-e3cc-458d-a116-8ee7c839e28e">
+      <console name="Connection test" type="STANDARD" schema="test" session="Main" />
+    </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" />
+    <connection id="4acbf5c7-e3cc-458d-a116-8ee7c839e28e" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -49,14 +53,15 @@
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
     <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/b6bd97c5-4c01-4d76-8e76-ba4b3674adab/console_1.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
-    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/88ba1667-0f14-43fb-b20d-39527b8954f6/console.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
-    <mapping file-url="file://$PROJECT_DIR$/sql/2_create_database.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
-    <mapping file-url="file://$PROJECT_DIR$/sql/3_create_tables.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
-    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/b6bd97c5-4c01-4d76-8e76-ba4b3674adab/console.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
-    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/0cddf177-bf30-496c-ae9c-a69a36a3261d/console.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
-    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/363ef4a4-b0ab-4e61-9dbd-666f161562c9/console.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
     <mapping file-url="file://$PROJECT_DIR$/sql/5_fill_tables.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
+    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/0cddf177-bf30-496c-ae9c-a69a36a3261d/console.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
+    <mapping file-url="file://$PROJECT_DIR$/sql/2_create_database.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
+    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/b6bd97c5-4c01-4d76-8e76-ba4b3674adab/console.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
+    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/88ba1667-0f14-43fb-b20d-39527b8954f6/console.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
+    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/363ef4a4-b0ab-4e61-9dbd-666f161562c9/console.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
+    <mapping file-url="file://$PROJECT_DIR$/sql/3_create_tables.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
     <mapping file-url="file://$PROJECT_DIR$/sql/1_drop_database.sql" connection-id="44a1cdc0-03a8-4dd4-b2f1-f96066450d2a" session-id="MAIN" current-schema="cafe_db" />
+    <mapping file-url="file://$APPLICATION_CONFIG_DIR$/consoles/db/365c7191-2ee5-4ce2-8cc7-63d699277fc4/console.sql" connection-id="4acbf5c7-e3cc-458d-a116-8ee7c839e28e" session-id="MAIN" current-schema="test" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />
@@ -92,6 +97,90 @@
           <host value="localhost" />
           <port value="3306" />
           <database value="cafe_db" />
+          <type value="USER_PASSWORD" />
+          <user value="root" />
+          <deprecated-pwd value="MXNraW5ueWRvdWJsZXNwYWNlMiQ=" />
+        </database>
+        <properties>
+          <auto-commit value="false" />
+        </properties>
+        <ssh-settings>
+          <active value="false" />
+          <proxy-host value="" />
+          <proxy-port value="22" />
+          <proxy-user value="" />
+          <deprecated-proxy-pwd value="" />
+          <auth-type value="PASSWORD" />
+          <key-file value="" />
+          <key-passphrase value="" />
+        </ssh-settings>
+        <ssl-settings>
+          <active value="false" />
+          <certificate-authority-file value="" />
+          <client-certificate-file value="" />
+          <client-key-file value="" />
+        </ssl-settings>
+        <details>
+          <charset value="UTF-8" />
+          <session-management value="true" />
+          <ddl-file-binding value="true" />
+          <database-logging value="false" />
+          <connect-automatically value="true" />
+          <restore-workspace value="true" />
+          <restore-workspace-deep value="true" />
+          <environment-type value="default" />
+          <connectivity-timeout value="5" />
+          <idle-time-to-disconnect value="30" />
+          <idle-time-to-disconnect-pool value="5" />
+          <credential-expiry-time value="10" />
+          <max-connection-pool-size value="7" />
+          <alternative-statement-delimiter value="" />
+        </details>
+        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false">
+          <object-type-filter use-master-settings="true">
+            <object-type name="SCHEMA" enabled="true" />
+            <object-type name="USER" enabled="true" />
+            <object-type name="ROLE" enabled="true" />
+            <object-type name="PRIVILEGE" enabled="true" />
+            <object-type name="CHARSET" enabled="true" />
+            <object-type name="TABLE" enabled="true" />
+            <object-type name="VIEW" enabled="true" />
+            <object-type name="MATERIALIZED_VIEW" enabled="true" />
+            <object-type name="NESTED_TABLE" enabled="true" />
+            <object-type name="COLUMN" enabled="true" />
+            <object-type name="INDEX" enabled="true" />
+            <object-type name="CONSTRAINT" enabled="true" />
+            <object-type name="DATASET_TRIGGER" enabled="true" />
+            <object-type name="DATABASE_TRIGGER" enabled="true" />
+            <object-type name="SYNONYM" enabled="true" />
+            <object-type name="SEQUENCE" enabled="true" />
+            <object-type name="PROCEDURE" enabled="true" />
+            <object-type name="FUNCTION" enabled="true" />
+            <object-type name="PACKAGE" enabled="true" />
+            <object-type name="TYPE" enabled="true" />
+            <object-type name="TYPE_ATTRIBUTE" enabled="true" />
+            <object-type name="ARGUMENT" enabled="true" />
+            <object-type name="DIMENSION" enabled="true" />
+            <object-type name="CLUSTER" enabled="true" />
+            <object-type name="DBLINK" enabled="true" />
+          </object-type-filter>
+          <object-name-filters />
+        </object-filters>
+      </connection>
+      <connection id="4acbf5c7-e3cc-458d-a116-8ee7c839e28e" active="true">
+        <database>
+          <name value="Connection test" />
+          <description value="" />
+          <database-type value="MYSQL" />
+          <config-type value="BASIC" />
+          <database-version value="8.0" />
+          <driver-source value="BUILTIN" />
+          <driver-library value="" />
+          <driver value="" />
+          <url-type value="DATABASE" />
+          <host value="localhost" />
+          <port value="3306" />
+          <database value="test" />
           <type value="USER_PASSWORD" />
           <user value="root" />
           <deprecated-pwd value="MXNraW5ueWRvdWJsZXNwYWNlMiQ=" />

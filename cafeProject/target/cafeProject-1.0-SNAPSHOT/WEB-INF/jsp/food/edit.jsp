@@ -48,59 +48,13 @@
             <option>блюдо</option>
             <option>напиток</option>
         </select>
-<%--        <INPUT type="text" id="type" name="type" value="${type}">--%>
-<%--        <c:forEach items="${ingredients}" var="item">--%>
             <LABEL for="ingredients">Ингредиенты</LABEL>
-<%--            <input type="text" id="ingredient" name="ingredient" value="${item.title}, ">--%>
-<%--        </c:forEach>--%>
             <select id="ingredients" name="ingredients" multiple="multiple" size="5">
                 <c:forEach items="${ingredients}" var="ingredient">
                     <option>${ingredient.title}</option>
                 </c:forEach>
             </select>
-<%--        <INPUT type="text" id="ingredients" name="ingredients" value="${ingredients}">--%>
-
         <BUTTON type="submit">Сохранить</BUTTON>
-        <c:if test="${not empty food}">
-            <%--      <c:if test="${not empty client.returnedUsages or not empty reader.currentUsages or not empty reader.overdueUsages}">--%>
-            <c:set var="disabled" value="disabled"/>
-            <%--      </c:if>--%>
-            <BUTTON type="button" onclick="submitFormById('form-delete')" ${disabled}>Удалить</BUTTON>
-        </c:if>
         <BUTTON type="reset">Сбросить</BUTTON>
     </FORM>
-<%--    <c:if test="${not empty client}">--%>
-<%--        <c:url value="/food/delete.html" var="clientDeleteUrl"/>--%>
-<%--        <FORM action="${clientDeleteUrl}" method="post" id="form-delete" onsubmit="return confirmation(this, 'Вы уверены, что хотите удалить посетителя?')">--%>
-<%--            <INPUT type="hidden" name="id" value="${client.id}">--%>
-<%--        </FORM>--%>
-        <%--    <c:if test="${not empty client.overdueUsages}">--%>
-        <%--      <H2>Список невозвращённых вовремя книг</H2>--%>
-        <%--      <TABLE>--%>
-        <%--        <TR>--%>
-        <%--          <TH>Автор</TH>--%>
-        <%--          <TH>Название</TH>--%>
-        <%--          <TH>Дата выдачи</TH>--%>
-        <%--          <TH>Планируемая дата возврата</TH>--%>
-        <%--        </TR>--%>
-        <%--        <c:forEach items="${reader.overdueUsages}" var="usage">--%>
-        <%--          <TR>--%>
-        <%--            <TD>--%>
-        <%--              <c:choose>--%>
-        <%--                <c:when test="${not empty usage.book.author}">--%>
-        <%--                  <u:person value="${usage.book.author}"/>--%>
-        <%--                </c:when>--%>
-        <%--                <c:otherwise>--%>
-        <%--                  Без автора--%>
-        <%--                </c:otherwise>--%>
-        <%--              </c:choose>--%>
-        <%--            </TD>--%>
-        <%--            <TD>${usage.book.title}</TD>--%>
-        <%--            <TD><fmt:formatDate value="${usage.deliveryDate}" pattern="dd.MM.yyyy"/></TD>--%>
-        <%--            <TD><fmt:formatDate value="${usage.planReturnDate}" pattern="dd.MM.yyyy"/></TD>--%>
-        <%--          </TR>--%>
-        <%--        </c:forEach>--%>
-        <%--      </TABLE>--%>
-        <%--    </c:if>--%>
-<%--    </c:if>--%>
 </u:html>

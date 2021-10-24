@@ -14,6 +14,13 @@ public class Order extends Entity {
     public Order(Integer id) {
         setId(id);
     }
+
+    public Order(Integer id, UserInfo clientId, Double price, OrderStatus status) {
+        setId(id);
+        this.clientId = clientId;
+        this.price = price;
+        this.orderStatus = status;
+    }
     public void setClientId(UserInfo client) {
         this.clientId = client;
     }
