@@ -3,15 +3,15 @@
 <%@taglib tagdir="/WEB-INF/tags" prefix="u"%>
 <link rel="stylesheet" href="css/bootstrap.css">
 <script src="js/bootstrap.js"></script>
-<u:html title="блюда" message="${message}">
+<u:html title="Заказы" message="${message}">
     <H1>${message}</H1>
-    <H2>Список заказов</H2>
+    <H2>${list}</H2>
     <TABLE>
         <TR>
-            <TH>Имя клиента</TH>
-            <TH>Блюда</TH>
-            <TH>Стоимость</TH>
-            <TH>Статус</TH>
+            <TH>${name}</TH>
+            <TH>${dishes}</TH>
+            <TH>${price}</TH>
+            <TH>${status}</TH>
         </TR>
         <c:url value="/order/edit.html" var="orderEditUrl"/>
         <c:forEach items="${orders}" var="order">
@@ -31,6 +31,7 @@
         </c:forEach>
     </TABLE>
     <FORM action="${orderEditUrl}" method="post">
-        <BUTTON type="submit">Создать новый</BUTTON>
+        <INPUT type="hidden" name="locale" value="${locale}">
+        <BUTTON type="submit">${add}</BUTTON>
     </FORM>
 </u:html>

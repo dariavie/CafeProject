@@ -19,20 +19,21 @@ public class LoginAction extends Action {
     private static Logger logger = Logger.getLogger(LoginAction.class);
 
     private static Map<Role, List<MenuItem>> menu = new ConcurrentHashMap<>();
+    private static ResourceBundle bundle = ResourceBundle.getBundle("resources");
 
     static {
         menu.put(Role.WORKER, new ArrayList<>(Arrays.asList(
-                new MenuItem("/search/dish/form.html", "блюда"),
-                new MenuItem("/search/ingredient/form.html", "ингредиенты"),
-                new MenuItem("/search/order/form.html", "заказы")
+                new MenuItem("/search/dish/form.html", bundle.getString("menu.dishes")),
+                new MenuItem("/search/ingredient/form.html", bundle.getString("menu.ingredients")),
+                new MenuItem("/search/order/form.html", bundle.getString("menu.orders"))
         )));
         menu.put(Role.ADMINISTRATOR, new ArrayList<>(Arrays.asList(
-                new MenuItem("/client/list.html", "посетители"),
-                new MenuItem("/worker/list.html", "работники")
+                new MenuItem("/client/list.html", bundle.getString("menu.admin.clients")),
+                new MenuItem("/worker/list.html", bundle.getString("menu.admin.workers"))
         )));
         menu.put(Role.CLIENT, new ArrayList<>(Arrays.asList(
-                new MenuItem("/food/list.html", "блюда"),
-                new MenuItem("/order/list.html", "заказы")
+                new MenuItem("/food/list.html", bundle.getString("menu.dishes")),
+                new MenuItem("/order/list.html", bundle.getString("menu.orders"))
         )));
     }
 
@@ -54,6 +55,7 @@ public class LoginAction extends Action {
                 session.setAttribute("authorizedUser", user);
                 logger.info("user: " + user);
                 session.setAttribute("menu", menu.get(user.getRole()));
+                session.setAttribute("title", bundle.getString("title"));
                 logger.info(String.format("user \"%s\" is logged in from %s (%s:%s)", login, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
                 return new Forward("/index.html");
             } else {

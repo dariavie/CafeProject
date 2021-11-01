@@ -15,32 +15,33 @@
         </c:if>
         <c:set var="price" value="${order.price}"/>
         <c:set var="status" value="${order.orderStatus}"/>
-        <c:set var="title" value="Заказ номер ${order.id}"/>
+        <c:set var="title" value="${orderInChange} ${order.id}"/>
     </c:when>
     <c:otherwise>
         <c:if test="${not empty message}">
             <c:set var="title" value="${message}"/>
         </c:if>
-        <c:set var="title" value="Новый заказ"/>
+        <c:set var="title" value="${orderNew}"/>
     </c:otherwise>
 </c:choose>
 <u:html title="${title}" message="${message}">
     <H2>${title}</H2>
     <c:url value="/order/save.html" var="orderSaveUrl"/>
     <FORM action="${orderSaveUrl}" method="post" onsubmit="return validateEditOrder(this)">
+        <INPUT type="hidden" name="locale" value="${locale}">
         <c:if test="${not empty order}">
             <INPUT type="hidden" name="id" value="${order.id}">
         </c:if>
         <H1>${message}</H1>
-        <label for="foods">Выберите блюдо из существующих</label>
+        <label for="foods">${foodChoose}</label>
         <select id="foods" name="foods" multiple="multiple" size="5">
             <c:forEach items="${foods}" var="food">
                 <option>${food.title}</option>
             </c:forEach>
         </select>
-        <BUTTON type="submit">Сохранить</BUTTON>
-        <BUTTON type="reset">Сбросить</BUTTON>
+        <BUTTON type="submit">${save}</BUTTON>
+        <BUTTON type="reset">${reset}</BUTTON>
         <br/>
-        <a href="/cafeProject_war_exploded/food/edit.html" style="color:black">Или создайте новое</a>
+        <a href="/cafeProject_war_exploded/food/edit.html" style="color:black">${foodCreate}</a>
     </FORM>
 </u:html>

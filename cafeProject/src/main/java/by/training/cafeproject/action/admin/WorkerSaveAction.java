@@ -22,6 +22,8 @@ public class WorkerSaveAction extends AdministratorAction {
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         Forward forward = new Forward("/worker/edit.html");
+        String locale = request.getParameter("locale");
+        forward.getAttributes().put("locale", locale);
         try {
             Validator<User> userValidator = ValidatorFactory.createValidator(User.class);
             User user = userValidator.validate(request);

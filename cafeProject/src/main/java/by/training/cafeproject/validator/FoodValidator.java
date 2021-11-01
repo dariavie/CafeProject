@@ -33,9 +33,9 @@ public class FoodValidator implements Validator<Food> {
         }
         parameter = request.getParameter("type");
         if (parameter != null && !parameter.isEmpty()) {
-            if (parameter.equals("блюдо")) {
+            if (parameter.equals("блюдо") || parameter.equals("dish")) {
                 food.setType(FoodType.DISH);
-            } else if (parameter.equals("напиток")) {
+            } else if (parameter.equals("напиток") || parameter.equals("drink")) {
                 food.setType(FoodType.DRINK);
             }
         } else {

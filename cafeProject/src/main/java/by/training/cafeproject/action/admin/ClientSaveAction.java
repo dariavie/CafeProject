@@ -20,6 +20,9 @@ public class ClientSaveAction extends AdministratorAction {
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         Forward forward = new Forward("/client/edit.html");
+        String locale = request.getParameter("locale");
+        logger.info("locale from clientSaveAction: " + locale);
+        forward.getAttributes().put("locale", locale);
         try {
             Validator<User> userValidator = ValidatorFactory.createValidator(User.class);
             User user = userValidator.validate(request);

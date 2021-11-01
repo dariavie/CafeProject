@@ -20,15 +20,26 @@ public class OrderServiceImpl extends ServiceImpl implements OrderService {
             OrderDao dao = transaction.createDao(OrderDao.class);
             OrderFoodDao orderFoodDao = transaction.createDao(OrderFoodDao.class);
             FoodDao foodDao = transaction.createDao(FoodDao.class);
+            UserInfoDao userInfoDao = transaction.createDao(UserInfoDao.class);
+            UserDao userDao = transaction.createDao(UserDao.class);
             OrderFood orderFood = new OrderFood();
             List<Food> foods = new ArrayList<>();
             if (order.getId() != null) {
                 dao.update(order);
                 foods = order.getFoods();
                 List<OrderFood> orderFoods = orderFoodDao.readByOrderId(order.getId());
+                int id = order.getClientId().getId();
+                UserInfo clientInfo = userInfoDao.read(id);
+                order.setClientId(clientInfo);
                 boolean isExist = false;
                 for (OrderFood orderFoodTemp : orderFoods) {
+                    orderFoodTemp.setOrderId(order);
+                    orderFoodTemp.setFoodId(foodDao.read(orderFoodTemp.getFoodId().getId()));
                     for (Food food : foods) {
+                        logger.info("orderFoodTemp: " + orderFoodTemp);
+                        logger.info("foodId from orderFoodTemp: " + orderFoodTemp.getFoodId());
+                        logger.info("title of foodId from orderFoodTemp: " + orderFoodTemp.getFoodId().getTitle());
+                        logger.info("title of food: " + food.getTitle());
                         if (orderFoodTemp.getFoodId().getTitle().equals(food.getTitle())) {
                             isExist = true;
                         }
@@ -50,10 +61,14 @@ public class OrderServiceImpl extends ServiceImpl implements OrderService {
                         orderFood.setFoodId(food);
                         orderFoodDao.create(orderFood);
                     }
+                    isExist = false;
                 }
             } else {
                 orderFood = new OrderFood();
                 order.setId(dao.create(order));
+                int clientId = order.getClientId().getId();
+                UserInfo userInfo = userInfoDao.read(clientId);
+                order.setClientId(userInfo);
                 orderFood.setOrderId(order);
                 foods = order.getFoods();
                 String title;

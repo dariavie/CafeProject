@@ -5,15 +5,25 @@
 <script src="js/bootstrap.js"></script>
 <u:html title="посетители" message="${message}">
     <H1>${message}</H1>
-    <H2>Список посетителей</H2>
+<%--    <H2>Список посетителей</H2>--%>
+<%--    <TABLE>--%>
+<%--        <TR>--%>
+<%--            <TH>Логин</TH>--%>
+<%--            <TH>Пароль</TH>--%>
+<%--            <TH>Фамилия</TH>--%>
+<%--            <TH>Имя</TH>--%>
+<%--            <TH>Телефон</TH>--%>
+<%--            <TH>email</TH>--%>
+<%--        </TR>--%>
+    <H2>${list}</H2>
     <TABLE>
         <TR>
-            <TH>Логин</TH>
-            <TH>Пароль</TH>
-            <TH>Фамилия</TH>
-            <TH>Имя</TH>
-            <TH>Телефон</TH>
-            <TH>email</TH>
+            <TH>${login}</TH>
+            <TH>${password}</TH>
+            <TH>${surname}</TH>
+            <TH>${name}</TH>
+            <TH>${phone}</TH>
+            <TH>${email}</TH>
         </TR>
         <c:url value="/client/edit.html" var="clientEditUrl"/>
         <c:url value="/client/delete.html" var="clientDeleteUrl"/>
@@ -30,17 +40,23 @@
                 <TD>${client.email}
                     <FORM action="${clientDeleteUrl}" method="post">
                         <INPUT type="hidden" name="email" value="${client.email}">
-                        <BUTTON type="submit">Удалить посетителя</BUTTON>
+                        <INPUT type="hidden" name="locale" value="${locale}">
+<%--                        <BUTTON type="submit">Удалить посетителя</BUTTON>--%>
+                        <BUTTON type="submit">${remove}</BUTTON>
                     </FORM>
                     <FORM action="${clientEditUrl}" method="post">
                         <INPUT type="hidden" name="id" value="${client.userId.id}">
-                        <BUTTON type="submit">Изменить посетителя</BUTTON>
+                        <INPUT type="hidden" name="locale" value="${locale}">
+<%--                        <BUTTON type="submit">Изменить посетителя</BUTTON>--%>
+                        <BUTTON type="submit">${change}</BUTTON>
                     </FORM>
                 </TD>
             </TR>
         </c:forEach>
     </TABLE>
     <FORM action="${clientEditUrl}" method="post">
-        <BUTTON type="submit">Добавить</BUTTON>
+        <INPUT type="hidden" name="locale" value="${locale}">
+<%--        <BUTTON type="submit">Добавить</BUTTON>--%>
+        <BUTTON type="submit">${add}</BUTTON>
     </FORM>
 </u:html>

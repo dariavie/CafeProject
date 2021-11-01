@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class FoodEditAction extends ClientAction {
     private static final Logger logger = Logger.getLogger(FoodEditAction.class);
@@ -42,6 +44,30 @@ public class FoodEditAction extends ClientAction {
                 request.setAttribute("food", food);
             }
         } catch(NumberFormatException e) {}
+
+        String locale = request.getParameter("locale");
+        logger.info("locale from FoodEditAction: " + locale);
+        request.setAttribute("locale", locale);
+        ResourceBundle bundle = ResourceBundle.getBundle("resources");
+        try {
+            if (locale.equals("en")) {
+                bundle = ResourceBundle.getBundle("resources", new Locale("en", "US"));
+            } else if (locale.equals("ru")) {
+                bundle = ResourceBundle.getBundle("resources", new Locale("ru", "BE"));
+            }
+        } catch (NullPointerException e) {}
+        finally {
+            request.setAttribute("foodInChange", bundle.getString("food.inchange"));
+            request.setAttribute("foodNew", bundle.getString("food.new"));
+            request.setAttribute("foodTitlePar", bundle.getString("food.title"));
+            request.setAttribute("descriptionPar", bundle.getString("description"));
+            request.setAttribute("typePar", bundle.getString("type"));
+            request.setAttribute("typeDish", bundle.getString("food.dish"));
+            request.setAttribute("typeDrink", bundle.getString("food.drink"));
+            request.setAttribute("ingredientsPar", bundle.getString("ingredients"));
+            request.setAttribute("save", bundle.getString("save"));
+            request.setAttribute("reset", bundle.getString("reset"));
+        }
         return null;
     }
 }

@@ -70,7 +70,7 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(SQL_UPDATE);
-            statement.setInt(3, entity.getId());
+            statement.setInt(4, entity.getId());
             statement.setInt(1, entity.getClientId().getId());
             statement.setDouble(2, entity.getPrice());
             statement.setInt(3, entity.getOrderStatus().getId());

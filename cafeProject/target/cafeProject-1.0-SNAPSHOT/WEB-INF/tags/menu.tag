@@ -38,22 +38,42 @@
             <H1 style="color: papayawhip">
                 <c:url value="/img/logo_img.jpeg" var="logoUrl"/>
                 <IMG class="arrow" src="${logoUrl}" width="200px">
-                Кафе «FreshTy»
+                Cafe «dr.Food»
             </H1>
         </div>
         <div class="col-md-6" style="text-align: right">
             <ul style="child-align: right; color: papayawhip">
-                язык:<br/>
+                <c:choose>
+                    <c:when test="${not empty language}">
+                        ${language}<br/>
+                    </c:when>
+                    <c:otherwise>
+                        language: <br/>
+                    </c:otherwise>
+                </c:choose>
+<%--                язык:<br/>--%>
                 <c:url value="${redirectedData}" var="requestUrl"/>
+<%--                <form action="${requestUrl}" method="post">--%>
+<%--                    <a href="${requestUrl}" style="color: papayawhip; text-align: right">--%>
+<%--                        <input type="hidden" name="locale" value="ru">--%>
+<%--                        ru <br/>--%>
+<%--                    </a>--%>
+<%--                    <a href="${requestUrl}" style="color: papayawhip; text-align: right">--%>
+<%--                        <input type="hidden" name="locale" value="en">--%>
+<%--                        en <br/>--%>
+<%--                    </a>--%>
+<%--                </form>--%>
                 <form action="${requestUrl}" method="post">
-                    <a href="${requestUrl}" style="color: papayawhip; text-align: right">
+                    <button type="submit" style="background-color: #04414d; color: papayawhip; text-align: right">
                         <input type="hidden" name="locale" value="ru">
-                        ru <br/>
-                    </a>
-                    <a href="${requestUrl}" style="color: papayawhip; text-align: right">
+                        русский <br/>
+                    </button>
+                </form>
+                <form action="${requestUrl}" method="post">
+                    <button type="submit" style="background-color: #04414d; color: papayawhip; text-align: right">
                         <input type="hidden" name="locale" value="en">
-                        en <br/>
-                    </a>
+                        english <br/>
+                    </button>
                 </form>
             </ul>
         </div>
@@ -81,9 +101,25 @@
                     <A href="#" class="drop-button" style="color: #1c3636">${authorizedUser.login} </A>
                     <ul>
                         <c:url value="/profile/edit.html" var="profileEditUrl"/>
-                        <li><A href="${profileEditUrl}" style="color: #1c3636">профиль</A></li>
+                        <c:choose>
+                            <c:when test="${not empty profile}">
+                                <li><A href="${profileEditUrl}" style="color: #1c3636">${profile}</A></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li><A href="${profileEditUrl}" style="color: #1c3636">profile</A></li>
+                            </c:otherwise>
+                        </c:choose>
+<%--                        <li><A href="${profileEditUrl}" style="color: #1c3636">профиль</A></li>--%>
                         <c:url value="/logout.html" var="logoutUrl"/>
-                        <li><A href="${logoutUrl}" style="color: #1c3636">выход</A></li>
+                        <c:choose>
+                            <c:when test="${not empty exit}">
+                                <li><A href="${logoutUrl}" style="color: #1c3636">${exit}</A></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li><A href="${logoutUrl}" style="color: #1c3636">log out</A></li>
+                            </c:otherwise>
+                        </c:choose>
+<%--                        <li><A href="${logoutUrl}" style="color: #1c3636">выход</A></li>--%>
                     </ul>
                 </div>
             </div>

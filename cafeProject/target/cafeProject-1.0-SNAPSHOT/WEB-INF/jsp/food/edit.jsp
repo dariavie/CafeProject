@@ -16,7 +16,7 @@
         <c:if test="${not empty food.ingredients}">
             <c:set var="foodIngredients" value="${food.ingredients}"/>
         </c:if>
-        <c:set var="title" value="Блюдо ${food.title}"/>
+        <c:set var="title" value="${foodInChange} ${food.title}"/>
         <c:if test="${not empty ingredients}">
             <c:set var="ingredients" value="${ingredients}"/>
         </c:if>
@@ -28,33 +28,34 @@
         <c:if test="${not empty ingredients}">
             <c:set var="ingredients" value="${ingredients}"/>
         </c:if>
-        <c:set var="title" value="Новое блюдо"/>
+        <c:set var="title" value="${foodNew}"/>
     </c:otherwise>
 </c:choose>
 <u:html title="${title}" message="${message}">
     <H2>${title}</H2>
     <c:url value="/food/save.html" var="foodSaveUrl"/>
     <FORM action="${foodSaveUrl}" method="post" onsubmit="return validateEditFood(this)">
+        <INPUT type="hidden" name="locale" value="${locale}">
         <c:if test="${not empty food}">
             <INPUT type="hidden" name="id" value="${food.id}">
         </c:if>
         <H1>${message}</H1>
-        <LABEL for="foodTitle">Название</LABEL>
+        <LABEL for="foodTitle">${foodTitlePar}</LABEL>
         <INPUT type="text" id="foodTitle" name="foodTitle" value="${foodTitle}">
-        <LABEL for="description">Описание</LABEL>
+        <LABEL for="description">${descriptionPar}</LABEL>
         <INPUT type="text" id="description" name="description" value="${description}">
-        <LABEL for="type">Тип</LABEL>
+        <LABEL for="type">${typePar}</LABEL>
         <select id="type" name="type" size="2">
-            <option>блюдо</option>
-            <option>напиток</option>
+            <option>${typeDish}</option>
+            <option>${typeDrink}</option>
         </select>
-            <LABEL for="ingredients">Ингредиенты</LABEL>
+            <LABEL for="ingredients">${ingredientsPar}</LABEL>
             <select id="ingredients" name="ingredients" multiple="multiple" size="5">
                 <c:forEach items="${ingredients}" var="ingredient">
                     <option>${ingredient.title}</option>
                 </c:forEach>
             </select>
-        <BUTTON type="submit">Сохранить</BUTTON>
-        <BUTTON type="reset">Сбросить</BUTTON>
+        <BUTTON type="submit">${save}</BUTTON>
+        <BUTTON type="reset">${reset}</BUTTON>
     </FORM>
 </u:html>

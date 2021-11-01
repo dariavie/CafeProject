@@ -17,7 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class DispatcherServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(DispatcherServlet.class);
@@ -75,7 +77,19 @@ public class DispatcherServlet extends HttpServlet {
                 }
             }
             String loc = request.getParameter("locale");
+            request.setAttribute("locale", loc);
             logger.info("locale: " + loc);
+            ResourceBundle bundle = ResourceBundle.getBundle("resources");
+            try {
+                if (loc.equals("en")) {
+                    bundle = ResourceBundle.getBundle("resources", new Locale("en", "US"));
+                } else if (loc.equals("ru")) {
+                    bundle = ResourceBundle.getBundle("resources", new Locale("ru", "BE"));
+                }
+            } catch (NullPointerException e) {}
+            request.setAttribute("profile", bundle.getString("menu.profile"));
+            request.setAttribute("exit", bundle.getString("menu.exit"));
+            request.setAttribute("language", bundle.getString("language"));
             ActionManager actionManager = ActionManagerFactory.getManager(getFactory());
             Action.Forward forward = actionManager.execute(action, request, response);
             actionManager.close();

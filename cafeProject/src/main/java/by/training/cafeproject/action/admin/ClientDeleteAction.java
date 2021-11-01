@@ -15,6 +15,8 @@ public class ClientDeleteAction extends AdministratorAction {
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         Forward forward = new Forward("/client/list.html");
+        String locale = request.getParameter("locale");
+        forward.getAttributes().put("locale", locale);
         try {
             UserService userService = factory.getService(UserService.class);
             UserInfoService userInfoService = factory.getService(UserInfoService.class);

@@ -54,11 +54,26 @@ public class Order extends Entity {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Order order = (Order) o;
+        return Objects.equals(clientId, order.clientId) && Objects.equals(price, order.price) && orderStatus == order.orderStatus && Objects.equals(foods, order.foods);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), clientId, price, orderStatus, foods);
+    }
+
+    @Override
     public String toString() {
         return "Order{" +
                 "clientId=" + clientId +
                 ", price=" + price +
                 ", orderStatus=" + orderStatus +
+                ", foods=" + foods +
                 "} " + super.toString();
     }
 }

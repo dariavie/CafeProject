@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.locks.ReentrantLock;
 
 final public class ConnectionPool {
     private static Logger logger = Logger.getLogger(ConnectionPool.class);
@@ -24,14 +25,16 @@ final public class ConnectionPool {
     private String password;
     private int maxSize;
     private int checkConnectionTimeout;
+    private ReentrantLock locker;
 
     private BlockingQueue<PooledConnection> freeConnections = new LinkedBlockingQueue<>();
     private Set<PooledConnection> usedConnections = new ConcurrentSkipListSet<>();
 
     private ConnectionPool() {}
 
-    public synchronized Connection getConnection() throws PersistentException {
+    public Connection getConnection() throws PersistentException {
         PooledConnection connection = null;
+        locker.lock();
         while(connection == null) {
             try {
                 if(!freeConnections.isEmpty()) {
@@ -51,6 +54,8 @@ final public class ConnectionPool {
             } catch(InterruptedException | SQLException e) {
                 logger.error("It is impossible to connect to a database", e);
                 throw new PersistentException(e);
+            } finally {
+                locker.unlock();
             }
         }
         usedConnections.add(connection);
@@ -58,7 +63,8 @@ final public class ConnectionPool {
         return connection;
     }
 
-    synchronized void freeConnection(PooledConnection connection) {
+    void freeConnection(PooledConnection connection) {
+        locker.lock();
         try {
             if(connection.isValid(checkConnectionTimeout)) {
                 connection.clearWarnings();
@@ -71,11 +77,16 @@ final public class ConnectionPool {
             logger.warn("It is impossible to return database connection into pool", e1);
             try {
                 connection.getConnection().close();
-            } catch(SQLException e2) {}
+            } catch (SQLException e2) {
+            }
+        } finally {
+            locker.unlock();
         }
     }
 
-    public synchronized void init(String driverClass, String url, String user, String password, int startSize, int maxSize, int checkConnectionTimeout) throws PersistentException {
+    public void init(String driverClass, String url, String user, String password, int startSize, int maxSize, int checkConnectionTimeout) throws PersistentException {
+        locker = new ReentrantLock();
+        locker.lock();
         try {
             logger.info("start of connection pool init");
             destroy();
@@ -91,6 +102,8 @@ final public class ConnectionPool {
         } catch(ClassNotFoundException | SQLException | InterruptedException e) {
             logger.fatal("It is impossible to initialize connection pool", e);
             throw new PersistentException(e);
+        } finally {
+            locker.unlock();
         }
     }
 
@@ -104,7 +117,8 @@ final public class ConnectionPool {
         return new PooledConnection(DriverManager.getConnection(url, user, password));
     }
 
-    public synchronized void destroy() {
+    public void destroy() {
+        locker.lock();
         usedConnections.addAll(freeConnections);
         freeConnections.clear();
         for(PooledConnection connection : usedConnections) {
@@ -112,6 +126,7 @@ final public class ConnectionPool {
                 connection.getConnection().close();
             } catch(SQLException e) {}
         }
+        locker.unlock();
         usedConnections.clear();
     }
 

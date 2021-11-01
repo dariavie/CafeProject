@@ -5,18 +5,31 @@
 <script src="js/bootstrap.js"></script>
 <u:html title="Работники" message="${message}">
     <H1>${message}</H1>
-    <H2>Список работников</H2>
+<%--    <H2>Список работников</H2>--%>
+<%--    <TABLE>--%>
+<%--        <TR>--%>
+<%--            <TH>Логин</TH>--%>
+<%--            <TH>Пароль</TH>--%>
+<%--            <TH>Фамилия</TH>--%>
+<%--            <TH>Имя</TH>--%>
+<%--            <TH>Телефон</TH>--%>
+<%--            <TH>email</TH>--%>
+<%--            <TH>Дата начала работы</TH>--%>
+<%--            <TH>Дата окончания работы</TH>--%>
+<%--            <TH>Специализация</TH>--%>
+<%--        </TR>--%>
+    <H2>${list}</H2>
     <TABLE>
         <TR>
-            <TH>Логин</TH>
-            <TH>Пароль</TH>
-            <TH>Фамилия</TH>
-            <TH>Имя</TH>
-            <TH>Телефон</TH>
-            <TH>email</TH>
-            <TH>Дата начала работы</TH>
-            <TH>Дата окончания работы</TH>
-            <TH>Специализация</TH>
+            <TH>${login}</TH>
+            <TH>${password}</TH>
+            <TH>${surname}</TH>
+            <TH>${name}</TH>
+            <TH>${phone}</TH>
+            <TH>${email}</TH>
+            <TH>${startDate}</TH>
+            <TH>${endDate}</TH>
+            <TH>${specialization}</TH>
         </TR>
         <c:url value="/worker/edit.html" var="workerEditUrl"/>
         <c:url value="/worker/delete.html" var="workerDeleteUrl"/>
@@ -36,17 +49,20 @@
                 <TD>${worker.specialization}
                     <FORM action="${workerDeleteUrl}" method="post">
                         <INPUT type="hidden" name="id" value="${worker.id}">
-                        <BUTTON type="submit">Удалить работника</BUTTON>
+                        <INPUT type="hidden" name="locale" value="${locale}">
+                        <BUTTON type="submit">${remove}</BUTTON>
                     </FORM>
                     <FORM action="${workerEditUrl}" method="post">
                         <INPUT type="hidden" name="id" value="${worker.id}">
-                        <BUTTON type="submit">Изменить работника</BUTTON>
+                        <INPUT type="hidden" name="locale" value="${locale}">
+                        <BUTTON type="submit">${change}</BUTTON>
                     </FORM>
                 </TD>
             </TR>
         </c:forEach>
     </TABLE>
     <FORM action="${workerEditUrl}" method="post">
-        <BUTTON type="submit">Добавить</BUTTON>
+        <INPUT type="hidden" name="locale" value="${locale}">
+        <BUTTON type="submit">${add}</BUTTON>
     </FORM>
 </u:html>

@@ -81,23 +81,23 @@ public class Food extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Food food = (Food) o;
-        return Objects.equals(title, food.title) && Objects.equals(description, food.description) && Objects.equals(price, food.price) && type == food.type && Objects.equals(recipe, food.recipe);
+        return Objects.equals(title, food.title) && Objects.equals(description, food.description) && Objects.equals(price, food.price) && type == food.type && Objects.equals(recipe, food.recipe) && Objects.equals(ingredients, food.ingredients);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), title, description, price, type, recipe);
+        return Objects.hash(super.hashCode(), title, description, price, type, recipe, ingredients);
     }
 
     @Override
     public String toString() {
         return "Food{" +
-                "id='" + getId() + '\'' +
-                ", title='" + title + '\'' +
+                "title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", recipe='" + recipe + '\'' +
                 ", price=" + price +
                 ", type=" + type +
-                '}';
+                ", recipe='" + recipe + '\'' +
+                ", ingredients=" + ingredients +
+                "} " + super.toString();
     }
 }

@@ -61,7 +61,7 @@ public abstract class Person extends Entity {
                 ", surname='" + surname + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }
 

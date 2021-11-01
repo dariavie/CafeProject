@@ -48,10 +48,9 @@ public class FoodIngredient extends Entity{
     @Override
     public String toString() {
         return "FoodIngredient{" +
-                "id='" + getId() + '\'' +
-                ", food=" + foodId +
-                ", ingredient=" + ingredientId +
+                "foodId=" + foodId +
+                ", ingredientId=" + ingredientId +
                 ", ingredientAmount='" + ingredientAmount + '\'' +
-                "} ";
+                "} " + super.toString();
     }
 }

@@ -25,6 +25,8 @@ public class FoodSaveAction extends ClientAction {
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         Forward forward = new Forward("/food/edit.html");
+        String locale = request.getParameter("locale");
+        forward.getAttributes().put("locale", locale);
         try {
             Validator<Food> foodValidator = ValidatorFactory.createValidator(Food.class);
             Food food = foodValidator.validate(request);

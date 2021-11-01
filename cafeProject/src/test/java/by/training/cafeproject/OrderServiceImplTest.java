@@ -8,10 +8,7 @@ import by.training.cafeproject.domain.Order;
 import by.training.cafeproject.domain.OrderStatus;
 import by.training.cafeproject.domain.UserInfo;
 import by.training.cafeproject.exception.PersistentException;
-import by.training.cafeproject.service.FoodService;
-import by.training.cafeproject.service.OrderService;
-import by.training.cafeproject.service.ServiceFactory;
-import by.training.cafeproject.service.UserInfoService;
+import by.training.cafeproject.service.*;
 import by.training.cafeproject.service.exception.ServiceException;
 import by.training.cafeproject.service.impl.ServiceFactoryImpl;
 import org.apache.log4j.*;
@@ -32,6 +29,7 @@ public class OrderServiceImplTest {
     private static Order resultOrder = new Order();
     private ServiceFactory factory;
     private OrderService orderService;
+    private OrderFoodService orderFoodService;
     private FoodService foodService;
     private UserInfoService userInfoService;
     private ArrayList<Food> foods;
@@ -82,16 +80,16 @@ public class OrderServiceImplTest {
         init();
         foodService = factory.getService(FoodService.class);
         return new Object[][] {
-                {7, 6, 34.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(1), foodService.findById(2)))},
-                {7, 5, 34.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(1), foodService.findById(2)))},
-                {7, 5, 40.01, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(1), foodService.findById(2)))},
-                {7, 5, 34.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(1), foodService.findById(2)))},
-                {7, 5, 34.44, OrderStatus.INPROGRESS, new ArrayList<>(Arrays.asList(foodService.findById(1), foodService.findById(2)))},
-                {7, 5, 34.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(1), foodService.findById(2)))},
+                {7, 6, 34.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(2), foodService.findById(1)))},
+                {7, 5, 34.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(2), foodService.findById(1)))},
+                {7, 5, 40.01, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(2), foodService.findById(1)))},
+                {7, 5, 34.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(2), foodService.findById(1)))},
+                {7, 5, 34.44, OrderStatus.INPROGRESS, new ArrayList<>(Arrays.asList(foodService.findById(2), foodService.findById(1)))},
+                {7, 5, 34.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(2), foodService.findById(1)))},
                 {7, 5, 34.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(1)))},
                 {7, 5, 34.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(2)))},
-                {7, 5, 34.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(1), foodService.findById(2), foodService.findById(3)))},
-                {7, 5, 34.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(1), foodService.findById(2)))},
+                {7, 5, 34.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(2), foodService.findById(1), foodService.findById(3)))},
+                {7, 5, 34.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(2), foodService.findById(1)))},
 
                 {8, 6, 21.99, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(2)))},
                 {8, 5, 21.99, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(2)))},
@@ -111,7 +109,7 @@ public class OrderServiceImplTest {
                 {9, 6, 44.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(4)))},
                 {9, 6, 44.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(3), foodService.findById(2)))},
                 {9, 6, 44.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(1)))},
-                {9, 6, 44.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(4), foodService.findById(1)))},
+                {9, 6, 44.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(1), foodService.findById(4)))},
                 {9, 6, 44.44, OrderStatus.DONE, new ArrayList<>(Arrays.asList(foodService.findById(4)))}
         };
     }
@@ -171,10 +169,12 @@ public class OrderServiceImplTest {
         order.setOrderStatus(orderStatus);
         order.setFoods(foods);
         orderService = factory.getService(OrderService.class);
+        orderFoodService = factory.getService(OrderFoodService.class);
         orderService.save(order);
         int id = order.getId();
         resultOrder = orderService.findById(id);
-        assertEquals(order, resultOrder);
+        assertEquals(resultOrder, order);
+        orderFoodService.deleteByOrderId(id);
         orderService.delete(id);
     }
 
